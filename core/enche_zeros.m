@@ -16,6 +16,13 @@ function new_inds = enche_zeros(ind1, ind2)
     no_cent2 = size(ind2, 1);
     dim_cent = size(ind1, 2);
 
+    % Se forem da mesma dimensao, retorna os individuos de entrada
+
+    if no_cent1 == no_cent2
+        new_inds = {ind1, ind2}; 
+        return
+    end
+
     % Transformando os inds numa linha
 
     ind1 = mat2ind(ind1);

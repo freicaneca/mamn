@@ -27,16 +27,12 @@ function indices_proximos = pega_vizinhos_proximos(ind, n, populacao)
     
     for i = 1:pop_size
 
-        % Criando cell array com individuos transformados para terem mesma
-        % quantidade de centroides (preenchidos com zero)
+        % Calculando distancia entre ind e populacao{i}. Mesmo se forem de
+        % diferentes dimensoes, a funcao calcula_distancia resolve isso. Ela
+        % retorna o vetor diferenca. Como queremos um escalar, pegamos a soma
+        % do vetor.
 
-        new_inds = enche_zeros(ind, populacao{i});
-
-        pop_padded = mat2ind(new_inds{2});
-        ind_padded = mat2ind(new_inds{1});
-
-        % Calculando distancia
-        dist_vector(i) = sum(abs(ind_padded - pop_padded));
+        dist_vector(i) = sum(abs(calcula_diferenca(ind, populacao{i})));
         
     end
 

@@ -11,3 +11,4 @@ function new_ind = mat2ind(ind)
     dim_cent = size(ind, 2);
 
     new_ind = reshape(transpose(ind), 1, no_cent*dim_cent);
+

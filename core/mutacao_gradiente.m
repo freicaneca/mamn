@@ -22,11 +22,11 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     % numero de centroides de ind. Os individuos tambem serao transformados
     % numa linha para facilitar o calculo do gradiente.
 
-    for i = 1:length(indices_proximos)
-        ind_linha = reshape(populacao{indices_proximos(i)}, 1, dim_cent*no_cent);
-        subpop(i,:) = ind_linha;
-        subpop_aptidao(i) = matriz_aptidao(i);
-    end
+    %for i = 1:length(indices_proximos)
+    %    ind_linha = reshape(populacao{indices_proximos(i)}, 1, dim_cent*no_cent);
+    %    subpop(i,:) = ind_linha;
+    %    subpop_aptidao(i) = matriz_aptidao(i);
+    %end
 
     % O vetor que indica a direcao do gradiente eh igual a ind - subpop(i). O
     % sentido pode ser positivo ou negativo, dependendo da diferenca entre
@@ -34,15 +34,16 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     % subpop, teremos o gradiente resultante.
 
     grad = zeros(1, dim_cent);
-    for i = 1:size(subpop,1)
+    for i = indices_proximos
         
-        % Calculando aptidao de ind e subtraindo da aptidao de subpop(i)
-        dif_aptidao = aptidao_teste(ind) - subpop_aptidao(i);
+        % Calculando aptidao de ind e subtraindo da aptidao de populacao(i)
+        dif_aptidao = aptidao_teste(ind) - matriz_aptidao(i);
 
-        % Calculando diferenca entre ind e subpop(i)
-        dif_ind = ind - subpop(i);
+        % Calculando diferenca entre ind e populacao(i)
+        dif_ind = calcula_distancia(ind, populacao{i})(1:dim_cent*no_cent)
 
-        grad = grad + dif_aptidao*dif_ind;
+        % Calculando distancia
+        %grad = grad + dif_aptidao*dif_ind;
     end
     
     grad
