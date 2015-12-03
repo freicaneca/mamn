@@ -39,11 +39,18 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
         % Calculando aptidao de ind e subtraindo da aptidao de populacao(i)
         dif_aptidao = aptidao_teste(ind) - matriz_aptidao(i);
 
-        % Calculando diferenca entre ind e populacao(i)
-        dif_ind = calcula_distancia(ind, populacao{i})(1:dim_cent*no_cent)
+        % Calculando vetor diferenca entre ind e populacao(i)
+        % Como o vetor diferenca pode ter mais/menos dimensoes de no_cent, o
+        % deslocamento sera na quantidade de dimensoes permitida pelo ind. Ex.:
+        % se ind = [1 1; 2 2] e populacao{i} = [0 0; 1 1; 2 2], temos que a
+        % subtracao eh [-1 -1; -1 -1; 2 2], mas ind nao pode se locomover
+        % no espaco 3d. Logo, a terceira dimensao sera desprezada, resultando
+        % em [-1 -1; -1 -1]
+
+        dif_ind = calcula_distancia(ind, populacao{i})(1:dim_cent*no_cent);
 
         % Calculando distancia
-        %grad = grad + dif_aptidao*dif_ind;
+        grad = grad + dif_aptidao*dif_ind;
     end
     
     grad
