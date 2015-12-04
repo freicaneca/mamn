@@ -14,32 +14,27 @@
 %%%%%%%%%%
 function [result] = db(ind, dados)
 
+    result = -1;                             % inicializa o valor do resultado
+
     [clusters,~] = size(ind);
+    [rowP,colP] = size(dados);
     
     D = pdist(ind);                         % calcula todas as distâncias euclidianas
     distances = squareform(D);              % matriz de distâncias
     
     s = espacamentos(clusters, ind, dados);     % vetor de espaçamentos
     
-    soma = 0;
     for i=1:clusters
+    
+        for j=i+1:clusters
         
-        max = -1;
-        
-        for j=1:clusters                       
-            if (i ~= j)
-                temp = (s(i) + s(j)) / distances(i,j);
-                if (temp > max)
-                    max = temp;
-                end
-            end
+            temp = s(1)
+            
         end
-        
-        soma = soma + max;
     end
     
-    result = soma / clusters;
     
+
 end
 
 %%%%%%%%%%
@@ -73,7 +68,7 @@ function [resultS] = espacamentos(totalClusters, ind, dados)
                
         for j=1:c
             
-            x = [tempDados(j,:);ind(i,:)];
+            x = [tempDados(j);ind(i)];
             d = pdist(x);
             somaDistancias = somaDistancias + d;
         
