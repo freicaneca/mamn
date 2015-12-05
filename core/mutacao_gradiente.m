@@ -15,6 +15,9 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     no_cent = size(ind, 1);
     dim_cent = size(ind, 2);
 
+    % Valor de correcao do passo. Mesmo valor utilizado na tese de Cicero
+    csi = 1.8;
+
     % Pegando indice dos vizinhos proximos  
     indices_proximos = pega_vizinhos_proximos(ind, n, populacao);
 
@@ -33,9 +36,9 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     % aptidao de ind e de subpop(i). Somando as contribuicoes de cada membro de
     % subpop, teremos o gradiente resultante.
 
-    grad = zeros(1, dim_cent);
+    grad = zeros(1, dim_cent*no_cent);
     for i = indices_proximos
-        
+       
         % Calculando aptidao de ind e subtraindo da aptidao de populacao(i)
         dif_aptidao = aptidao_teste(ind) - matriz_aptidao(i);
 
@@ -47,10 +50,35 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
         % no espaco 3d. Logo, a terceira dimensao sera desprezada, resultando
         % em [-1 -1; -1 -1]
 
-        dif_ind = calcula_distancia(ind, populacao{i})(1:dim_cent*no_cent);
+        dif_ind = calcula_diferenca(ind, populacao{i})(1:dim_cent*no_cent);
 
         % Calculando distancia
         grad = grad + dif_aptidao*dif_ind;
     end
     
-    grad
+    % Como so importa a direcao do gradiente, podemos transforma-lo num vetor
+    % unitario dividindo por sua norma.
+
+    grad_norm = grad/norm(grad);
+
+    % Atualizando ind. Sera transformado em linha para ser adicionado ao grad
+    % (que esta em linha) multiplicado pelo passo.
+
+    new_ind = mat2ind(ind);
+    new_ind = ind2mat(new_ind + passo*grad_norm, dim_cent);
+
+    % Corrigindo passo: se aptidao do individuo original usando passo =
+    % sigma*csi for maior do que usando sigma/csi, o proximo sigma sera
+    % sigma*csi. Caso contrario, sera sigma/csi.
+
+    ind_produto = ind2mat(mat2ind(ind) + passo*csi*grad_norm, dim_cent);
+    ind_divisao = ind2mat(mat2ind(ind) + passo/csi*grad_norm, dim_cent);
+
+    if aptidao_teste(ind_produto) >= aptidao_teste(ind_divisao)
+        new_passo = passo*csi;
+    else
+        new_passo = passo/csi;
+    end
+
+    out_list = {new_ind, new_passo};   
+
