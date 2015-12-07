@@ -1,0 +1,41 @@
+%%%%%%%%%%
+%
+% FUNÇÃO: geraPopulacao - Gera População inicial
+%
+% ENTRADA:
+%
+% - ind: Cromossomo com os clusters
+% - dados: Base de dados sendo utilizada
+% - e1: Constante a ser passada para a função
+% - p: Constante a ser passada para a função
+%
+% SAÍDA:
+%
+% - resultI: o valor da função calculada
+%
+%%%%%%%%%%
+function [] = geraPopulacao(dados, pInicial)
+
+    [r,c] = size(dados);
+    
+    kMax = round(sqrt(r));
+    
+    %%%%%%%%%%%%
+    % Monta os ranges para geração dos valores dos clusters
+    %%%%%%%%%%%%
+    range = zeros(2,c);
+    for i=1:c
+        range(1,i) = min(dados(:,i));
+        range(2,i) = max(dados(:,i));
+    end
+    
+    
+    for i=1:pInicial
+        
+        k = randi([2,kMax],1);  % Número de clusters a serem gerados por indivíduo
+        
+    end
+    
+    
+
+end

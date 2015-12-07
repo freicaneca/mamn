@@ -16,8 +16,19 @@
 %%%%%%%%%%
 function [] = ga(dataset, solutions)
 
+    %%%%%%%%%
+    % Carrega dados da base de dados passada
+    %%%%%%%%%    
     fprintf('\nDATASET: %s\n', dataset);
-
-    [dados, ~] = loadData(sprintf('data/%s.data', dataset));
+    [dados, ~] = loadData(sprintf('data/%s.data', dataset));    % Elimina a coluna de Lables (classes)
+    
+    %%%%%%%%%
+    % Gera população inicial
+    %%%%%%%%%
+    
+    
+    
+    
+    
 
 end
