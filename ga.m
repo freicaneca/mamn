@@ -6,18 +6,22 @@
 %
 % - dataset: Base de dados que será utilizada
 % - solutions: Quantidade de soluções a serem geradas inicialmente
+% - stop: Quantidade de gerações a serem executadas sem que o valor de
+% melhor fitness seja alterado
 %
 % SAÍDA:
 %
-% - XXXX: XXXXXXXXXXX
+% - bestSolution: Melhor solução de fitness
 %
 % EXEMPLO DE COMO CHAMAR ESSA FUNÇÃO:
 %
-% >> ga('wine',100);
+% >> ga('wine', 100, 20);
 %
 %%%%%%%%%%
-function [] = ga(dataset, solutions)
+function [bestSolution] = ga(dataset, solutions, stop)
 
+    pesos = [1/3 1/3 1/3];
+    
     %%%%%%%%%
     % Carrega dados da base de dados passada
     %%%%%%%%%    
@@ -33,15 +37,31 @@ function [] = ga(dataset, solutions)
     % Calcula o Fitness de toda a população inicial
     %%%%%%%%%
     popFitness = zeros(solutions,1);
-    pesos = [1/3 1/3 1/3];
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
     
     %%%%%%%%%
-    % Calcula o Fitness de toda a população inicial
+    % Repetição até que o critério de parada seja atingido
     %%%%%%%%%
     counter = 0;
-    bestFitness = max(popFitness);    
+    bestFitness = max(popFitness);
+    
+    while (counter <= stop)
+    
+        
+        
+    end
+    
+    %%%%%%%%%
+    % Seleciona solução com o melhor fitness
+    %%%%%%%%%
+    popFitness = zeros(solutions,1);
+    for i=1:solutions
+        popFitness(i) = fitness(pop{i}, dados, pesos);
+    end    
+    [~,i] = max(popFitness);
+    bestSolution = pop{i};
+    
 
 end
