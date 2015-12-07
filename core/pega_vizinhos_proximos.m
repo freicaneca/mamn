@@ -16,7 +16,7 @@ function indices_proximos = pega_vizinhos_proximos(ind, n, populacao)
     pop_size = length(populacao);
 
     if n > pop_size
-        error("n maior do que tamanho da populacao.");
+        error('n maior do que tamanho da populacao.');
     end
 
     % Vetor que armazenara distancias. Elemento 1 eh a distancia entre o
@@ -37,7 +37,7 @@ function indices_proximos = pega_vizinhos_proximos(ind, n, populacao)
     end
 
     % Pegando os menores valores e seus indices associados
-    [valor indice] = sort(dist_vector);
+    [~, indice] = sort(dist_vector);
 
     indices_proximos = indice(1:n);
 

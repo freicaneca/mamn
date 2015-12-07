@@ -6,7 +6,7 @@
 %
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
-% - pesos: Pesos das funções no cálculo da função de fitness
+% - pesos: Vetor - Pesos das funções no cálculo da função de fitness
 %
 % SAÍDA:
 %
