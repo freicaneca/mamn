@@ -8,7 +8,7 @@ O arquivo eh o que contem os pesos/recompensas. Esse arquivo tambem sera
 atualizado.
 %}
 
-function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados)
+function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados, pesos_aptidao)
 
     % Abrindo arquivo arq_nome para leitura/escrita. Caso ele nao exista, sera
     % criado (opcao a+ faz isso.)
@@ -30,7 +30,7 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
     if ismember(no_cent, no_cent_arq) == 0
         
         % Pegando recompensa/new_ind da operacao de merge (0)
-        r_new_ind_merge = recompensa(ind, melhor_aptidao, 0, dados);
+        r_new_ind_merge = recompensa(ind, melhor_aptidao, 0, dados, pesos_aptidao);
 
         % Calculando peso com essa recompensa. Inicializando w_atual com 0
         r_merge = r_new_ind_merge{1};
@@ -42,7 +42,7 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         % Pegando recompensa/new_ind da operacao de split (1)
-        r_new_ind_split = recompensa(ind, melhor_aptidao, 1, dados);
+        r_new_ind_split = recompensa(ind, melhor_aptidao, 1, dados, pesos_aptidao);
 
         % Calculando peso com essa recompensa. Inicializando w_atual com 0
         r_split = r_new_ind_split{1};
@@ -81,7 +81,7 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
         op_local = roleta(roleta_peso);
 
         % Calculando recompensa, w e escrevendo no arquivo
-        r_ind_list = recompensa(ind, melhor_aptidao, op_local, dados);
+        r_ind_list = recompensa(ind, melhor_aptidao, op_local, dados, pesos_aptidao);
         r_atual = r_ind_list{1};
 
         % Retornando new_ind

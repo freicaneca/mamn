@@ -15,7 +15,7 @@ elemento 1: individuo
 elemento 2: tempo
 %}
 
-function out_list = split(ind, dados)
+function out_list = split(ind, dados, pesos_aptidao)
 
     % Gravando tempo
     tic;
@@ -94,7 +94,7 @@ function out_list = split(ind, dados)
         new_inds_list{i} = new_inds(:,:,i);
     end
 
-    out_ind = pega_melhor(new_inds_list);
+    out_ind = pega_melhor(new_inds_list, dados, pesos_aptidao);
     out_list{1} = out_ind;
     out_list{2} = toc;
 

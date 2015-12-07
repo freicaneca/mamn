@@ -11,7 +11,7 @@ elemento 1: individuo
 elemento 2: tempo
 %}
 
-function out_list = merge(in_ind, dados)
+function out_list = merge(in_ind, dados, pesos_aptidao)
     
     % Gravando tempo
     tic;
@@ -112,6 +112,6 @@ function out_list = merge(in_ind, dados)
 
     % Avaliando o melhor individuo dentre aqueles em new_inds
 
-    out_ind = pega_melhor(new_inds_list);
+    out_ind = pega_melhor(new_inds_list, dados, pesos_aptidao);
     out_list{1} = out_ind;
     out_list{2} = toc;

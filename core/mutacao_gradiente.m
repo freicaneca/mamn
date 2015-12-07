@@ -10,7 +10,7 @@ Recebe: individuo, n (quantidade de proximos), passo, populacao (cell array), ma
 Retorna: individuo mutado, passo atualizado.
 %}
 
-function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
+function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, dados, pesos_aptidao)
 
     no_cent = size(ind, 1);
     dim_cent = size(ind, 2);
@@ -40,7 +40,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     for i = indices_proximos
        
         % Calculando aptidao de ind e subtraindo da aptidao de populacao(i)
-        dif_aptidao = aptidao_teste(ind) - matriz_aptidao(i);
+        dif_aptidao = fitness(ind, dados, pesos_aptidao) - matriz_aptidao(i);
 
         % Calculando vetor diferenca entre ind e populacao(i)
         % Como o vetor diferenca pode ter mais/menos dimensoes de no_cent, o
@@ -74,7 +74,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao)
     ind_produto = ind2mat(mat2ind(ind) + passo*csi*grad_norm, dim_cent);
     ind_divisao = ind2mat(mat2ind(ind) + passo/csi*grad_norm, dim_cent);
 
-    if aptidao_teste(ind_produto) >= aptidao_teste(ind_divisao)
+    if aptidao_teste(ind_produto, dados, pesos_aptidao) >= aptidao_teste(ind_divisao, dados, pesos_aptidao)
         new_passo = passo*csi;
     else
         new_passo = passo/csi;
