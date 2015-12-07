@@ -21,6 +21,8 @@ function [result] = ch(ind, dados)
     tB = traceB(ind,dados);
 
     result = (tB/(K - 1)) / (tW/(n - 1));
+    
+    saveMinMax(result);
 
 end
 
@@ -78,5 +80,32 @@ function [resultTraceW] = traceW(ind, dados)
         end
         
         resultTraceW = resultTraceW + somaDistancias;
+    end
+end
+
+%%%%%%%%%%
+%
+% FUNÇÃO: saveMinMax
+%
+%%%%%%%%%%
+function [] = saveMinMax(value)
+
+    global fchmin;
+    global fchmax;
+    
+    if(~isempty(fchmin))
+        if(fchmin > value)
+            fchmin = value;
+        end
+    else
+        fchmin = value;
+    end
+
+    if(~isempty(fchmax))
+        if(fchmax < value)
+            fchmax = value;
+        end
+    else
+        fchmax = value;
     end
 end
