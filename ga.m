@@ -49,7 +49,16 @@ function [bestSolution] = ga(dataset, solutions, stop)
     
     while (counter <= stop)
     
-        
+       %%% TODO letra (a)
+
+       %%% TODO letra (b)
+       [filho1, filho2] = crossMutacao(pai1, pai2);
+
+       %%% TODO letra (c)
+
+       %%% TODO letra (d)
+
+       %%% TODO letra (e)
         
     end
     
@@ -63,5 +72,18 @@ function [bestSolution] = ga(dataset, solutions, stop)
     [~,i] = max(popFitness);
     bestSolution = pop{i};
     
+end
+
+%%%%%%%%%%
+%
+% FUNÇÃO: crossMutacao - Faz o crossover e a mutação
+%
+%%%%%%%%%%
+function [filho1, filho2] = crossMutacao(pai1, pai2)
+
+    [filho1, filho2] = crossover(pai1, pai2);
+    [filho1] = mutacao_gauss(filho1, p, sigma, min_valor, max_valor);
+    [filho2] = mutacao_gauss(filho2, p, sigma, min_valor, max_valor);
 
 end
+
