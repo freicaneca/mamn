@@ -25,7 +25,7 @@ function [] = ga(dataset, solutions)
     %%%%%%%%%
     % Gera população inicial
     %%%%%%%%%
-    
+    pop = geraPopulacao(dados, solutions);
     
     
     

@@ -4,19 +4,19 @@
 %
 % ENTRADA:
 %
-% - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
-% - e1: Constante a ser passada para a função
-% - p: Constante a ser passada para a função
+% - pInicial: Tamanho da população inicial
 %
 % SAÍDA:
 %
-% - resultI: o valor da função calculada
+% - pop: população inicial gerada
 %
 %%%%%%%%%%
-function [] = geraPopulacao(dados, pInicial)
+function [pop] = geraPopulacao(dados, pInicial)
 
     [r,c] = size(dados);
+    
+    pop = cell(pInicial,1);  % População inicial
     
     kMax = round(sqrt(r));
     
@@ -29,13 +29,23 @@ function [] = geraPopulacao(dados, pInicial)
         range(2,i) = max(dados(:,i));
     end
     
-    
+    %%%%%%%%%%%%
+    % Gera toda a população inicial de forma randômica
+    %%%%%%%%%%%%   
     for i=1:pInicial
         
         k = randi([2,kMax],1);  % Número de clusters a serem gerados por indivíduo
-        
-    end
-    
-    
 
+        ind = zeros(k,c);       % Cria o indivíduo zerado
+        
+        for j=1:k
+            for m=1:c
+                minR = range(1,m);
+                maxR = range(2,m);
+                ind(j,m) = minR + (maxR - minR).*rand(1,1);
+            end
+        end
+        
+        pop{i} = ind;
+    end
 end
