@@ -34,6 +34,8 @@ function [resultTraceB] = traceB(ind, dados)
     [clusters, ~] = size(ind);
     
     pert = pertinencia(ind, dados);         % a que clusters os dados pertencem
+    
+    centroideDados = mean(dados);
 
     resultTraceB = 0;
     for i=1:clusters
@@ -41,8 +43,8 @@ function [resultTraceB] = traceB(ind, dados)
         tempDados = dados(pert == i);       % dados pertencentes ao cluster i
         [elements,~] = size(tempDados);
         
-        x = [ind(i,:);ind(i,:)];            % TODO: Trocar um dos elementos aqui pelo CENTRÓIDE DA BASE INTEIRA  
-        d = pdist(x)^2;                     % distância ao quadrado
+        x = [centroideDados;ind(i,:)];            
+        d = pdist(x)^2;                           % distância ao quadrado
         
         resultTraceB = resultTraceB + (elements * d);
     end
