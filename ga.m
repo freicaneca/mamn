@@ -4,14 +4,12 @@
 %
 % ENTRADA:
 %
-% - ind: Cromossomo com os clusters
-% - dados: Base de dados sendo utilizada
-% - e1: Constante a ser passada para a função
-% - p: Constante a ser passada para a função
+% - dataset: Base de dados que será utilizada
+% - solutions: Quantidade de soluções a serem geradas inicialmente
 %
 % SAÍDA:
 %
-% - resultI: o valor da função calculada
+% - XXXX: XXXXXXXXXXX
 %
 % EXEMPLO DE COMO CHAMAR ESSA FUNÇÃO:
 %
@@ -40,5 +38,10 @@ function [] = ga(dataset, solutions)
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
     
+    %%%%%%%%%
+    % Calcula o Fitness de toda a população inicial
+    %%%%%%%%%
+    counter = 0;
+    bestFitness = max(popFitness);    
 
 end
