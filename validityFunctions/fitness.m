@@ -17,7 +17,7 @@ function [result] = fitness(ind, dados, pesos)
 
     resultDB = db(ind, dados);
     resultCH = ch(ind, dados);
-    resultI_index = i_index(ind, dados, 2, 2);  % O valor de E1 foi colocado 1 (POR ENQUANTO) <==== OBSERVAÇÃO IMPORTANTE
+    resultI_index = i_index(ind, dados, 2, 2);  % O valor de E1 foi colocado 2 (POR ENQUANTO) <==== OBSERVAÇÃO IMPORTANTE
 
     normalize_resultDB = normalizeDB(resultDB);
     normalize_resultCH = normalizeCH(resultCH);
