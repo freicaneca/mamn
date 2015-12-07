@@ -13,14 +13,10 @@
 % - result: fitness do cromossomo
 %
 %%%%%%%%%%
-function [filho1, filho2] = crossover(pai1, pai2, nPoints)
+function [filho1, filho2] = crossover(pai1, pai2)
 
-    [k1,~] = size(pai1);
+    [k1,c1] = size(pai1);
     [k2,~] = size(pai2);
-    
-    if nPoints >= k1
-        error('ERROR CROSSOVER: Maior número de cortes do que a quantidade de clusters no pai');
-    end
     
     if (k1 > k2)  % Troca os pais entre si
         temp = k2;
@@ -32,6 +28,18 @@ function [filho1, filho2] = crossover(pai1, pai2, nPoints)
         pai2 = pai1;
         pai1 = tempPai;
     end
+    
+    x1 = randi(k1);
+    x2 = randi(k1);
+    
+    if (x1 > x2)  % SWAP dos valores caso x1 seja maior que x2
+        temp = x2;
+        x2 = x1;
+        x1 = temp;
+    end
+    
+    x3 = randi(k2 - (x2 - x1));
+    x4 = x3 + (x2 - x1);
     
     
 
