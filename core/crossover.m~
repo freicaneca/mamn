@@ -1,0 +1,28 @@
+%%%%%%%%%%
+%
+% FUNÇÃO: fitness
+%
+% ENTRADA:
+%
+% - ind: Cromossomo com os clusters
+% - dados: Base de dados sendo utilizada
+% - pesos: Vetor - Pesos das funções no cálculo da função de fitness
+%
+% SAÍDA:
+%
+% - result: fitness do cromossomo
+%
+%%%%%%%%%%
+function [filho1, filho2] = crossover(pai1, pai2, nPoints)
+
+    [~,c1] = size(pai1);
+    [~,c2] = size(pai2);
+    
+    
+
+
+    if nPoints > c1
+        error('Maior número de cortes do que a quantidade de cl');
+    end
+
+end
