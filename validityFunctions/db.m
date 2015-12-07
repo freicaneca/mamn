@@ -71,7 +71,7 @@ function [resultS] = espacamentos(totalClusters, ind, dados)
         c = sum(pert == i);                       % quantidade de elementos em um dado cluster
         somaDistancias = 0;
         
-        tempDados = dados(pert == i);             % elementos pertencentes ao cluster i
+        tempDados = dados(pert == i,:);             % elementos pertencentes ao cluster i
                
         for j=1:c
             

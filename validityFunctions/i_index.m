@@ -40,7 +40,7 @@ function [resultEk] = ek(ind, dados)
     resultEk = 0;
     for i=1:clusters
         
-        tempDados = dados(pert == i);   % dados pertencentes ao cluster i
+        tempDados = dados(pert == i,:);   % dados pertencentes ao cluster i
         [elements,~] = size(tempDados);
         
         somaDistancias = 0;      
