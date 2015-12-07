@@ -13,9 +13,9 @@
 %%%%%%%%%%
 function [fLinha] = normalizeDB(fValue)
 
-    fmin = 0;
-    fmax = 10;
+    global fdbmin;
+    global fdbmax;
     
-    fLinha = (fValue - fmin) / (fmax - fmin);
+    fLinha = (fValue - fdbmin) / (fdbmax - fdbmin);
 
 end
