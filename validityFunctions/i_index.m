@@ -22,6 +22,8 @@ function [resultI] = i_index(ind, dados, e1, p)
     resultDk = dk(ind);
     
     resultI = ( (1/K) * (e1/resultEk) * resultDk )^p;
+    
+    saveMinMax(resultI);
 end
 
 %%%%%%%%%%
@@ -65,4 +67,31 @@ function [result] = dk(ind)
     
     result = max(distances);    % maior distancia entre os clusters   
     
+end
+
+%%%%%%%%%%
+%
+% FUNÇÃO: saveMinMax
+%
+%%%%%%%%%%
+function [] = saveMinMax(value)
+
+    global fImin;
+    global fImax;
+    
+    if(~isempty(fImin))
+        if(fImin > value)
+            fImin = value;
+        end
+    else
+        fImin = value;
+    end
+
+    if(~isempty(fImax))
+        if(fImax < value)
+            fImax = value;
+        end
+    else
+        fImax = value;
+    end
 end
