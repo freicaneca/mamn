@@ -27,7 +27,7 @@ popNova = popVelha;
 %Para cada filho aplicar a seleção (lambda = mi)
 for i = 1:mi
     % Seleciona w indivíduos a serem comparados com 1 filho
-    [indSelec] = gera_aleatorio (w, mi);
+    [indSelec] = gera_aleat (w, mi);
     % Analisa entre os w indivíduos aquele que for mais proximo do filho em
     % questão
     distancia = zeros(1,w);
