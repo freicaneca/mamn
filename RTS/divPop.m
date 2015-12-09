@@ -73,7 +73,7 @@ for i = 2:mi
         for j = (i+1):mi
             if (S(j) == S(i))
                 c = c + 1;
-                SubP{b, c} = P{i};
+                SubP{b, c} = P{j};
                 SubAptidao{b,c} = Aptidao(i);
             end
         end
