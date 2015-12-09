@@ -1,4 +1,4 @@
-function [popNova] = RTS (popVelha, mi, filhos, w, dados, pesos)
+function [popNova] = RTS (popVelha, Aptidao, mi, filhos, w, dados, pesos)
 
 %{
 Função seleciona os indivíduos através do métodos RTS
@@ -10,6 +10,7 @@ que serão considerados na geração seguinte
  w  = "window" número de valores que serão gerados aleatórios
  mi = valor máximo possível gerado por essa função 
       (representa o número de indivíduos da população)
+ Aptidao - Aptidao dos indivíduos da população
 
 ------------------------------Saída------------------------------
 popNova = População após o processo de seleção de indivíduos
@@ -40,9 +41,12 @@ for i = 1:mi
     
     % Comparar filhos{i} com popVelha{IndProx}
     [result_filho] = fitness(filhos{i}, dados, pesos);
-    [result_IndProx] = fitness(popNova{IndProx}, dados, pesos);
-    
-    if (result_filho >= result_IndProx)
+    %%%%%
+    %Ao colocar Aptidao como entrada não é necessário calcular a aptidão de
+    %nenhum pai
+    %[result_IndProx] = fitness(popNova{IndProx}, dados, pesos);
+    %%%%%
+    if (result_filho >= Aptidao(IndProx))
         popNova{IndProx} = filhos{i};
     end        
 end
