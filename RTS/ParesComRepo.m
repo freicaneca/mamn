@@ -17,9 +17,10 @@ Data de criação: 07/12/2015
 Data de atualização: 07/12/2015 
 %}
 
-pares = zeros (1,mi);
-for i = 1:2:mi
+pares = zeros(mi/2,2);
+for i = 1:(mi/2)
     %Gera dois valores aleatóriamente
-    pares( i:(i+1) ) = datasample(1:mi,2,'Replace',false);
+    pares(i,:) = datasample(1:mi,2,'Replace',false);
 end
+
 end

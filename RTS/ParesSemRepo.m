@@ -21,6 +21,9 @@ Data de atualização: 07/12/2015
 
 %}
 
-pares = randperm(mi);
-
+aux = randperm(mi);
+pares = zeros(mi/2,2);
+for i = 1:(mi/2)
+    pares(i,:) = aux(((2*i) - 1):(2*i));  
+end
 end
