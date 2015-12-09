@@ -1,7 +1,6 @@
 function [PD, Aptidao] = ajusteAdaptativo (P, mi, dados, pesos)
 %{
-%Função que encontra o valor adequado de w para a população da iteração
-vigente
+%Função que dispõe o valor de PD e da aptidão da população de pais
 
 ----------------------------Entradas-----------------------------
 P - População
