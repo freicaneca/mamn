@@ -101,12 +101,10 @@ function [bestSolution] = ga(dataset, solutions, stop)
            pop{end+1} = filho2;
 
        end
-       zz = 22222222222222
 
        % Adaptive local search in the whole population
 
        for i = 1:length(pop)
-       zz = 111111111111111
             
            pop{i} = controlador_busca_local(pop{i}, bestFitness,...
                local_search_filename, dados, pesos);
