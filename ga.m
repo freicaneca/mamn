@@ -20,10 +20,10 @@
 %%%%%%%%%%
 function [bestSolution] = ga(dataset, solutions, stop)
 
-    page_screen_output(0);
-    page_output_immediately(1);
+    %page_screen_output(0);
+    %page_output_immediately(1);
     %debug_on_warning(1)
-    warning("off");
+    %warning("off");
 
     %%%%%%%%%
     % Hidden variables

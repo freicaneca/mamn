@@ -13,8 +13,8 @@ no_cent op_local peso
 
 function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
 
-    page_screen_output(0);
-    page_output_immediately(1);
+    %page_screen_output(0);
+    %page_output_immediately(1);
     
 
     % Abrindo arquivo para leitura e escrita
