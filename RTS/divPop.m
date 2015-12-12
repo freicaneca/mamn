@@ -4,14 +4,13 @@ function [SubP, b, Aptidao, SubAptidao] = divPop (P, mi,dados, pesos)
 %Função que divide a população de indivíduos em subpopulações de acordo com
 o número de clusters dos indivíduos
 
-%{
 O cell array da população é separado em um cell array de subpopulações onde
 uma subpopulação ficará disponível em uma linha do cell array, a primeira
 componente de cada linha indicará o número de clusters da subpopulação,
 enquanto que a segunda componente indica o número de indivíduos da
 subpopulação
 %}
-
+%{
 ----------------------------Entradas-----------------------------
 P - População
 mi - número de indivíduos da população

@@ -20,13 +20,41 @@
 %%%%%%%%%%
 function [bestSolution] = ga(dataset, solutions, stop)
 
+    %%%%%%%%%
+    % Hidden variables
+    %%%%%%%%%
+
+    % Fitness functions weights
     pesos = [1/3 1/3 1/3];
+
+    % Mutation probability
+    p = 0.05;
+
+    % Gaussian mutation standard deviation
+    sigma = 1;
     
+    % Number of iterations before RTS adaptation begins
+    g = 20;
+
+    % Name of the local search weights file
+    local_search_filename = 'local_search.weights';
+    delete(local_search_filename);
+
+    % Setting w_min and w_max
+    w_min = round(solutions/20);
+    w_max = round(solutions/2);
+
     %%%%%%%%%
     % Carrega dados da base de dados passada
     %%%%%%%%%    
     fprintf('\nDATASET: %s\n', dataset);
     [dados, ~] = loadData(sprintf('data/%s.data', dataset));    % Elimina a coluna de Labels (classes)
+
+    %%%%%%%%%
+    % Finding minimum and maximum values in data (for mutation)
+    %%%%%%%%%
+    min_value = min(min(dados));
+    max_value = max(max(dados));
     
     %%%%%%%%%
     % Gera população inicial
@@ -46,19 +74,54 @@ function [bestSolution] = ga(dataset, solutions, stop)
     %%%%%%%%%
     counter = 0;
     bestFitness = max(popFitness);
-    
+
+    % Initializing number of iterations with no PD improvement
+    count_PD = 0;
+    PDmax = 1;
+
     while (counter <= stop)
     
        %%% TODO letra (a)
+       % Generating parents indices
+       parent_ind = ParesComRepo(solutions);
+       
+       % Crossover + mutation
+       for i = 1:size(parent_ind,1)
+           
+           pai1 = pop{parent_ind(i,1)};
+           pai2 = pop{parent_ind(i,2)};
+           [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_value, max_value);
 
-       %%% TODO letra (b)
-       [filho1, filho2] = crossMutacao(pai1, pai2);
+           % Adding offspring to population
+           pop{end+1} = filho1;
+           pop{end+1} = filho2;
 
-       %%% TODO letra (c)
+       end
 
-       %%% TODO letra (d)
+       % Adaptive local search in the whole population
 
-       %%% TODO letra (e)
+       for i = 1:length(pop)
+            
+           pop{i} = controlador_busca_local(pop{i}, bestFitness,...
+               local_search_filename, dados, pesos);
+
+       end
+
+       % Picking offspring from the population
+       offspring = {pop{solutions:end}};
+
+       % Calculating fitness of offspring
+
+       for i=1:solutions
+           popFitness(solutions+i) = fitness(pop{solutions+i}, dados, pesos);
+       end
+       
+       % Adaptive RTS
+
+       [pop, PDmax, count_PD] = selecao_RTS_adaptativo(pop, popFitness, solutions,...
+           offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
+
+       counter = counter + 1
         
     end
     
@@ -79,7 +142,7 @@ end
 % FUNÇÃO: crossMutacao - Faz o crossover e a mutação
 %
 %%%%%%%%%%
-function [filho1, filho2] = crossMutacao(pai1, pai2)
+function [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_valor, max_valor)
 
     [filho1, filho2] = crossover(pai1, pai2);
     [filho1] = mutacao_gauss(filho1, p, sigma, min_valor, max_valor);

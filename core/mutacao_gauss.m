@@ -6,11 +6,6 @@ padrao, min e max.
 
 Retorna: individuo mutado
 
-Nota: min e max sao os valores minimo e maximo dentre todos os atributos ate o
-momento. Caso o valor obtido apos a mutacao seja maior do que o max, ele sera
-'clipado': sera igual ao maximo.
-
-
 %}
 
 function new_ind = mutacao_gauss(ind, p, sigma, min_valor, max_valor)

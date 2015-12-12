@@ -1,4 +1,4 @@
-function [popNova, PDmax, count] = selecao_RTS_adaptativo (P, mi, dados, pesos, geracao, count, PDmax, wmin, wmax, g)
+function [popNova, PDmax, count] = selecao_RTS_adaptativo (P, aptidao, mi, filhos, dados, pesos, geracao, count, PDmax, wmin, wmax, g)
 %{
 Função que aplica o método de seleção de sobreviventes RTS usando método 
 adaptativo
@@ -37,5 +37,6 @@ Data de atualização: 08/12/2015
 
 [w, count, PDmax] = estrategiaAdaptacao (geracao, count, PD, PDmax, wmin, wmax, g);
 
-[popNova] = RTS (popVelha, Aptidao, mi, filhos, w, dados, pesos);
+%[popNova] = RTS (popVelha, Aptidao, mi, filhos, w, dados, pesos);
+[popNova] = RTS (P, aptidao, mi, filhos, w, dados, pesos);
 end

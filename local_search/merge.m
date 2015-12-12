@@ -107,7 +107,14 @@ function out_list = merge(in_ind, dados, pesos_aptidao)
     % aptidao.
     new_inds_list = {};
     for i = 1:qtde_ind
-        new_inds_list{i} = new_inds(:,:,i);
+        
+        % If there are only 2 centroids, cannot merge (fitness function wont
+        % work for 1 centroid). Will just repeat input ind
+        if qtde_cent == 2
+            new_inds_list{i} = in_ind;
+        else
+            new_inds_list{i} = new_inds(:,:,i);
+        end
     end
 
     % Avaliando o melhor individuo dentre aqueles em new_inds

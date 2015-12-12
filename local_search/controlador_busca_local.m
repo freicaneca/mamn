@@ -29,15 +29,26 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
     
     if ismember(no_cent, no_cent_arq) == 0
         
-        % Pegando recompensa/new_ind da operacao de merge (0)
-        r_new_ind_merge = recompensa(ind, melhor_aptidao, 0, dados, pesos_aptidao);
+        % If no_cent = 2, cannot merge.
+        if no_cent ~= 2
 
-        % Calculando peso com essa recompensa. Inicializando w_atual com 0
-        r_merge = r_new_ind_merge{1};
-        w_merge = calcula_peso(u, 0, r_merge);
+            % Pegando recompensa/new_ind da operacao de merge (0)
+            r_new_ind_merge = recompensa(ind, melhor_aptidao, 0, dados,...
+                pesos_aptidao);
 
-        % Escrevendo no arquivo de pesos para merge (0)
-        escreve_pesos(no_cent, 0, w_merge, arq_pesos);
+            % Calculando peso com essa recompensa. Inicializando w_atual com 0
+            r_merge = r_new_ind_merge{1};
+            w_merge = calcula_peso(u, 0, r_merge);
+
+            % Escrevendo no arquivo de pesos para merge (0)
+            escreve_pesos(no_cent, 0, w_merge, arq_pesos);
+
+        else
+            
+            % Write 0 reward to the file
+            escreve_pesos(no_cent, 0, 0, arq_pesos);
+
+        end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

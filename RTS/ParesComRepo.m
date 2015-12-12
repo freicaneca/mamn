@@ -20,7 +20,8 @@ Data de atualização: 07/12/2015
 pares = zeros(mi/2,2);
 for i = 1:(mi/2)
     %Gera dois valores aleatóriamente
-    pares(i,:) = datasample(1:mi,2,'Replace',false);
+    %pares(i,:) = datasample(1:mi,2,'Replace',false);
+    pares(i,:) = randsample(mi, 2);
 end
 
 end
