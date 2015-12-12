@@ -26,7 +26,8 @@ function out_list = recompensa(ind, melhor_aptidao, op_loc, dados, pesos_aptidao
 
     new_aptidao = fitness(new_ind, dados, pesos_aptidao);
     old_aptidao = fitness(ind, dados, pesos_aptidao);
-    rec = (new_aptidao/melhor_aptidao)*(new_aptidao - old_aptidao)/sqrt(t);
+    %rec = (new_aptidao/melhor_aptidao)*(new_aptidao - old_aptidao)/sqrt(t);
+    rec = (new_aptidao/(melhor_aptidao+0.00001))*(new_aptidao - old_aptidao);
 
     if rec < 0
         rec = 0;

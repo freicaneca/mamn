@@ -28,7 +28,9 @@ function [result] = db(ind, dados)
         
         for j=1:clusters                       
             if (i ~= j)
-                temp = (s(i) + s(j)) / distances(i,j);
+                % felipe
+                %temp = (s(i) + s(j)) / distances(i,j);
+                temp = (s(i) + s(j)) / (distances(i,j)+0.00001);
                 if (temp > max)
                     max = temp;
                 end

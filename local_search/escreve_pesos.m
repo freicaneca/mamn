@@ -13,11 +13,16 @@ no_cent op_local peso
 
 function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
 
+    page_screen_output(0);
+    page_output_immediately(1);
+    
+
     % Abrindo arquivo para leitura e escrita
     arq = fopen(arq_nome, 'a+');
 
     % Armazenando conteudos de arq numa matriz (inteiro, inteiro, float)
-    [no_cent_ op_local_ peso_] = textread(arq_nome, '%d %d %f');
+    [no_cent_ op_local_ peso_] = textread(arq_nome, '%f %f %f');
+    peso_
     
     % Flag que sera acionada caso seja encontrada uma linha com no_cent e
     % op_local fornecidos
@@ -32,7 +37,8 @@ function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
             
             % Atualizando conteudo de peso
             peso_(i) = peso;
-            dlmwrite(arq_nome, [no_cent_ op_local_ peso_], ' ')
+            %dlmwrite(arq, [no_cent_ op_local_ peso_], ' ');
+            break;
         end
     end
 
@@ -40,6 +46,8 @@ function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
     % final o conteudo (no_cent, op_local e peso)
 
     if flag == 0
-        fprintf(arq, '%d %d %f\n', no_cent, op_local, peso);
+        fprintf(arq, '%f %f %f\n', no_cent, op_local, peso);
+    else
+        dlmwrite(arq_nome, [no_cent_ op_local_ peso_], ' ');
     end
     fclose(arq);

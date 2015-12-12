@@ -21,7 +21,9 @@ function [resultI] = i_index(ind, dados, e1, p)
     resultEk = ek(ind,dados);
     resultDk = dk(ind);
     
-    resultI = ( (1/K) * (e1/resultEk) * resultDk )^p;
+    % felipe
+    resultI = ( (1/K) * (e1/(resultEk+0.0001)) * resultDk )^p;
+    %resultI = ( (1/K) * (e1/resultEk) * resultDk )^p;
     
     saveMinMax(resultI);
 end
