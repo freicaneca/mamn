@@ -32,7 +32,7 @@ function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
             
             % Atualizando conteudo de peso
             peso_(i) = peso;
-            dlmwrite('teste.abc', [no_cent_ op_local_ peso_], ' ')
+            dlmwrite(arq_nome, [no_cent_ op_local_ peso_], ' ')
         end
     end
 
@@ -42,4 +42,4 @@ function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
     if flag == 0
         fprintf(arq, '%d %d %f\n', no_cent, op_local, peso);
     end
-
+    fclose(arq);

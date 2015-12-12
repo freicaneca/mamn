@@ -20,7 +20,9 @@ function [result] = ch(ind, dados)
     tW = traceW(ind,dados);
     tB = traceB(ind,dados);
 
-    result = (tB/(K - 1)) / (tW/(n - 1));
+    %felipe
+    result = (tB/(K - 1)+0.00001) / (tW/(n - 1+0.00001)+0.00001);
+    %result = (tB/(K - 1)) / (tW/(n - 1));
     
     saveMinMax(result);
 

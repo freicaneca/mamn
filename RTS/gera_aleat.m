@@ -17,5 +17,6 @@ Data de atualização: 03/12/2015
 %}
 
 %Gera um vetor (de tamanho "w") com "mi" possíveis valores 
-ind_selecionados = datasample(1:mi,w,'Replace',false);
+%ind_selecionados = datasample(1:mi,w,'Replace',false);
+ind_selecionados= randsample(mi, w);
 end

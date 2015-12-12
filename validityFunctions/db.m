@@ -81,7 +81,9 @@ function [resultS] = espacamentos(totalClusters, ind, dados)
         
         end
         
-        resultS(i) = somaDistancias/c;
+        % felipe
+        %resultS(i) = somaDistancias/c;
+        resultS(i) = somaDistancias/(c+0.000001);
     
     end
 end
