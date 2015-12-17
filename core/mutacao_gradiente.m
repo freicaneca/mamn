@@ -38,7 +38,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
 
     grad = zeros(1, dim_cent*no_cent);
     for i = indices_proximos
-       
+               
         % Calculando aptidao de ind e subtraindo da aptidao de populacao(i)
         dif_aptidao = fitness(ind, dados, pesos_aptidao) - matriz_aptidao(i);
 
@@ -50,7 +50,8 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
         % no espaco 3d. Logo, a terceira dimensao sera desprezada, resultando
         % em [-1 -1; -1 -1]
 
-        dif_ind = calcula_diferenca(ind, populacao{i})(1:dim_cent*no_cent);
+        dif_ind = calcula_diferenca(ind, populacao{i});
+        dif_ind = dif_ind(1:dim_cent*no_cent);
 
         % Calculando distancia
         grad = grad + dif_aptidao*dif_ind;
@@ -74,7 +75,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
     ind_produto = ind2mat(mat2ind(ind) + passo*csi*grad_norm, dim_cent);
     ind_divisao = ind2mat(mat2ind(ind) + passo/csi*grad_norm, dim_cent);
 
-    if aptidao_teste(ind_produto, dados, pesos_aptidao) >= aptidao_teste(ind_divisao, dados, pesos_aptidao)
+    if fitness(ind_produto, dados, pesos_aptidao) >= fitness(ind_divisao, dados, pesos_aptidao)
         new_passo = passo*csi;
     else
         new_passo = passo/csi;

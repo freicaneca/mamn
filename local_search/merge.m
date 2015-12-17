@@ -1,6 +1,6 @@
 %{
 Funcao para realizar merge de clusters num individuo.
-Recebe: individuo (matriz), dados; 
+Recebe: individuo (matriz), dados, pesos aptidao; 
 Retorna: individuo e tempo gasto.
 
 Para saber quais clusters serao fundidos, precisa calcular aptidao de cada

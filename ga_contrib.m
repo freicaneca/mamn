@@ -1,10 +1,10 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: ga - Genetic Algorithm
+% FUNCTION: ga_contrib
 %
 % ENTRADA:
 %
-% - data: data to be used (matrix)
+% - dataset: Base de dados que será utilizada
 % - solutions: Quantidade de soluções a serem geradas inicialmente
 % - stop: Quantidade de gerações a serem executadas sem que o valor de
 % melhor fitness seja alterado
@@ -34,21 +34,21 @@ function [bestSolution] = ga(data, solutions, stop, pop)
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.05;
+    p = 0.25;
 
-    % Gaussian mutation standard deviation
-    sigma = 1;
-    
-    % Number of iterations before RTS adaptation begins
-    g = 20;
+    % Gradient mutation initial step size
+    passo = 1;
+
+    % Gradient mutation number of neighbors to analyze
+    n = 4;
 
     % Name of the local search weights file
     local_search_filename = 'local_search.weights';
     delete(local_search_filename);
 
     % Setting w_min and w_max
-    w_min = round(solutions/20);
-    w_max = round(solutions/2);
+    %w_min = round(solutions/20);
+    %w_max = round(solutions/2);
 
     %%%%%%%%%
     % Carrega dados da base de dados passada
@@ -83,8 +83,8 @@ function [bestSolution] = ga(data, solutions, stop, pop)
     bestFitness = max(popFitness);
 
     % Initializing number of iterations with no PD improvement
-    count_PD = 0;
-    PDmax = 1;
+    %count_PD = 0;
+    %PDmax = 1;
 
     while (counter <= stop)
     
@@ -92,18 +92,28 @@ function [bestSolution] = ga(data, solutions, stop, pop)
        % Generating parents indices
        parent_ind = ParesComRepo(solutions);
        
+       % Temporary population to handle gradient mutation
+       pop_temp = pop;
+
        % Crossover + mutation
        for i = 1:size(parent_ind,1)
            
            pai1 = pop{parent_ind(i,1)};
            pai2 = pop{parent_ind(i,2)};
-           [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_value, max_value);
 
+           %[filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_value, max_value);
+
+           [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, pop,...
+                popFitness, dados, pesos, p);
+           passo = novo_passo;
            % Adding offspring to population
-           pop{end+1} = filho1;
-           pop{end+1} = filho2;
+           pop_temp{end+1} = filho1;
+           pop_temp{end+1} = filho2;
 
        end
+
+       % Updating pop
+       pop = pop_temp;
 
        % Adaptive local search in the whole population
 
@@ -123,10 +133,11 @@ function [bestSolution] = ga(data, solutions, stop, pop)
            popFitness(solutions+i) = fitness(pop{solutions+i}, dados, pesos);
        end
        
-       % Adaptive RTS
+       % Probabilistic crowding. Picking old population (before generating offspring)
+       old_pop = {pop{1:solutions}};
 
-       [pop, PDmax, count_PD] = selecao_RTS_adaptativo(pop, popFitness, solutions,...
-           offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
+       pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
+       offspring, dados, pesos);
 
        counter = counter + 1
         
@@ -141,19 +152,19 @@ function [bestSolution] = ga(data, solutions, stop, pop)
     end    
     [~,i] = max(popFitness);
     bestSolution = pop{i};
-    
+
     % Printing
     bestSolution
     popFitness(i)
-
+    
 end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: crossMutacao - Faz o crossover e a mutação
+% FUNÇÃO: crossMutacaoGauss - Faz o crossover e a mutação gaussiana
 %
 %%%%%%%%%%
-function [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_valor, max_valor)
+function [filho1, filho2] = crossMutacaoGauss(pai1, pai2, p, sigma, min_valor, max_valor)
 
     [filho1, filho2] = crossover(pai1, pai2);
     [filho1] = mutacao_gauss(filho1, p, sigma, min_valor, max_valor);
@@ -161,3 +172,39 @@ function [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_valor, max_va
 
 end
 
+
+%%%%%%%%%%
+%
+% FUNÇÃO: crossMutacaoGrad - Faz o crossover e a mutação gradiente
+%
+%%%%%%%%%%
+function [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, pop,...
+    popFitness, dados, pesos, p)
+
+    [filho1, filho2] = crossover(pai1, pai2);
+
+    % Checking mutation probability
+    num = rand;
+
+    if num < p
+
+        % Gradient mutation returns offspring and gradient step size
+        lista_filho1_passo = mutacao_gradiente(filho1, n, passo, pop, popFitness, dados,...
+            pesos);
+        lista_filho2_passo = mutacao_gradiente(filho2, n, passo, pop, popFitness, dados,...
+            pesos);
+
+        % New gradient step size is the mean of both offspring'
+        novo_passo = (lista_filho1_passo{2}+lista_filho2_passo{2})/2;
+
+        % New offspring are the first item in offspring list
+        filho1 = lista_filho1_passo{1};
+        filho2 = lista_filho2_passo{1};
+
+    else
+
+        novo_passo = passo;
+
+    end
+
+end

@@ -22,7 +22,6 @@ function [] = escreve_pesos(no_cent, op_local, peso, arq_nome)
 
     % Armazenando conteudos de arq numa matriz (inteiro, inteiro, float)
     [no_cent_ op_local_ peso_] = textread(arq_nome, '%f %f %f');
-    peso_
     
     % Flag que sera acionada caso seja encontrada uma linha com no_cent e
     % op_local fornecidos

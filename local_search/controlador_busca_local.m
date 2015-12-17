@@ -16,7 +16,7 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
     arq = fopen(arq_pesos, 'a+');
 
     % Carregando dados de arq_pesos
-    [no_cent_arq op_local_arq peso_arq] = textread(arq_pesos, '%d %d %f');
+    [no_cent_arq op_local_arq peso_arq] = textread(arq_pesos, '%f %f %f');
 
     % Numero de centroides do individuo
     no_cent = size(ind, 1);

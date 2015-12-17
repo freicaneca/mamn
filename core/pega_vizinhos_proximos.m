@@ -23,7 +23,7 @@ function indices_proximos = pega_vizinhos_proximos(ind, n, populacao)
     % individuo e o individuo 1 da populacao. Inicializo tudo com um valor
     % alto.
 
-    dist_vector = 1028*ones(1, pop_size);
+    dist_vector = 999999*ones(1, pop_size);
     
     for i = 1:pop_size
 
