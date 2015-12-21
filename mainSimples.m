@@ -96,7 +96,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
     %%%%%%%%%%%%%%%%
     % Montagem do arquivo texto com os dados para tabulação
     %%%%%%%%%%%%%%%%
-    filename = strcat('dados/', dataset, '.txt');
+    filename = strcat('results/', dataset, '.txt');
 
     fileID = fopen(filename,'w');
     fprintf(fileID,'Média do Fitness - Média do Tempo - Média do RI - #Clusters - Count Cluster\n');
