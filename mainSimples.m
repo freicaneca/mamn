@@ -9,7 +9,7 @@ INPUTS:
     - Database file;
     - Population size;
     - Maximum number of generations;
-    - The K parameter from Crossvalidation
+    - The K parameter from number of repeats
 
 If 'both', the same generated population will be used for both algorithms.
 
@@ -22,7 +22,7 @@ OUTPUTS (as prints):
 function [] = mainSimples(dataset, pop_size, max_gen, K)
 
     %%%%%%%%%
-    % Código mais simples com o uso de Crossvalidation (K-fold)
+    % Código mais simples com o uso de K repetições
     %%%%%%%%%
     aveFitnessOrig = 0;
     aveFitnessCont = 0;
@@ -99,12 +99,14 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
     filename = strcat('dados/', dataset, '.txt');
 
     fileID = fopen(filename,'w');
-    fprintf(fileID,'Média do Fitness - Média do Tempo - Média do RI - Média # Clusters\n');
+    fprintf(fileID,'Média do Fitness - Média do Tempo - Média do RI - #Clusters - Count Cluster\n');
     fprintf(fileID,'Primeira Linha: ORIGINAL\n');
     fprintf(fileID,'Segunda Linha: CONTRIBUIÇÃO\n');
 
-    fprintf(fileID,'%.2f;%.2f;%.2f;%.2f',aveFitnessOrig,aveRuntimeOrig,aveRIOrig,mean(clustersOrig));
-    fprintf(fileID,'%.2f;%.2f;%.2f;%.2f',aveFitnessCont,aveRuntimeCont,aveRICont,mean(clustersCont));
+    [MOrig,FOrig] = mode(clustersOrig);
+    [MCont,FCont] = mode(clustersCont);
+    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d',aveFitnessOrig,aveRuntimeOrig,aveRIOrig,MOrig,FOrig);
+    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d',aveFitnessCont,aveRuntimeCont,aveRICont,MCont,FCont);
     fclose(fileID);    
 
 end
