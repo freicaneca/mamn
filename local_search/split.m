@@ -15,88 +15,55 @@ elemento 1: individuo
 elemento 2: tempo
 %}
 
-function out_list = split(ind, dados, pesos_aptidao)
+function out_list = split2(ind, data, fitness_w)
 
-    % Gravando tempo
     tic;
 
-    no_cent = size(ind,1);
-    dim_cent = size(ind,2);
-    qtde_dados = size(dados,1);
-    pertinencia_ = pertinencia(ind, dados); 
+    [no_cent, dim_cent] = size(ind);
+    pertinency_ = pertinencia(ind, data);
 
-    % Lista com os dados pertencentes a cada cluster. O elemento 1 contem umas
-    % matriz com os dados que pertencem ao centroide 1, e assim por diante.
+    best_fitness = 0;
 
-    lista_pert = {};
-
-    % Inicializando valores em lista_pert para permitir append
     for i = 1:no_cent
-        lista_pert{i} = inf*ones(1,dim_cent);
-    end
+        
+        [candidate, cand_fitness] = subsplit(ind, i, data, fitness_w,...
+            pertinency_);
 
-    % Preenchendo lista_pert e retirando linha de infinito
-    for i = 1:qtde_dados
-        lista_pert{pertinencia_(i)} = [lista_pert{pertinencia_(i)};dados(i,:)];
-    end
-
-    for i = 1:size(lista_pert,2)
-        lista_pert{i}(1,:) = [];
-    end
-
-    % Calculando maximo desvio padrao de cada dimensao de cada conjunto de pertinencias. Ex.: o
-    % conjunto lista_pert{1,:} tera um desvio padrao para cada uma das duas
-    % dimensoes. Sera escolhida a dimensao que apresenta maior desvio padrao.
-
-    % Vetor que armazenara todos os desvios padroes maximos (um desvio padrao
-    % max para cada centroide)
-    desv_max = zeros(1,no_cent);
-
-    % Vetor que armazenara a dimensao que apresenta maior desvio padrao para
-    % cada centroide
-    dim_max = ones(1,no_cent);
-
-    for i = 1:size(lista_pert,2)
-        for j = 1:dim_cent
-            desv = std(lista_pert{i}(:,j));
-            if desv > desv_max(i)
-                desv_max(i) = desv;
-                dim_max(i) = j;
-            end
+        if cand_fitness > best_fitness
+            best_fitness = cand_fitness;
+            out_ind = candidate;
         end
+
     end
 
-    % Como cada centroide sera dividido, sera criado um novo individuo pra cada
-    % centroide. Cada novo individuo tera um centroide a mais.
-
-    % no_cent individuos, cada um com no_cent+1 centroides.
-    qtde_ind = no_cent;
-    new_inds = zeros(no_cent+1, dim_cent, no_cent);
-
-    % Replicando ind em new_inds
-    for i = 1:no_cent
-        new_inds(1:no_cent,:,i) = ind;
-
-        % A ultima linha eh igual a i-esima. As atualizacoes acontecerao na
-        % i-esima e na ultima linhas.
-        new_inds(no_cent+1,:,i) = new_inds(i,:,i);
-
-        % Atualizando i-esima linha, somando com desv_max na dim_max
-        new_inds(i,dim_max(i),i) = new_inds(i,dim_max(i),i) + desv_max(i);
-
-        % Atualizando ultima linha, subtraindo desv_max na dim_max
-        new_inds(no_cent+1,dim_max(i),i) = new_inds(no_cent+1,dim_max(i),i) - desv_max(i);
-    end
-
-    % Colocando new_inds numa lista para avaliar aptidao
-    new_inds_list = {};
-    for i = 1:qtde_ind
-        new_inds_list{i} = new_inds(:,:,i);
-    end
-
-    out_ind = pega_melhor(new_inds_list, dados, pesos_aptidao);
     out_list{1} = out_ind;
     out_list{2} = toc;
 
 
 
+% Function that performs split operation.
+
+function [new_ind, new_fitness] = subsplit(ind, cent_index, data, fitness_w, pertinency)
+
+    % Data belonging to the centroid
+    data_pert = data(pertinency==cent_index,:);
+
+    % If no data belongs to centroid, consider all data
+    if isempty(data_pert)
+        data_pert = data;
+    end
+
+    % Finding maximum standard deviation among data_pert dimensions
+    [max_std, max_index] = max(std(data_pert));
+
+    % Adding and subtracting to new centroids dimensions
+    ind(cent_index, max_index) = max_std + ind(cent_index, max_index);
+    new_cent_add = ind(cent_index,:);
+    ind(cent_index, max_index) = ind(cent_index, max_index) - 2*max_std;
+    new_cent_subtract = ind(cent_index,:);
+
+    ind(cent_index,:) = [];
+    new_ind = [ind; new_cent_subtract; new_cent_add];
+    new_fitness = fitness(new_ind, data, fitness_w);
+
+    

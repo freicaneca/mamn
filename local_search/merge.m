@@ -11,114 +11,72 @@ elemento 1: individuo
 elemento 2: tempo
 %}
 
-function out_list = merge(in_ind, dados, pesos_aptidao)
-    
-    % Gravando tempo
+function out_list = merge(ind, data, fitness_w)
+
     tic;
-    %genpath(addpath('..'));
-    % Verificando se individuo eh unica linha ou matriz.
-    if size(in_ind,1) == 1
-        in_ind = ind2mat(in_ind, dim_cent);
-    end
-    
-    qtde_cent = size(in_ind,1);
-    qtde_dados = size(dados, 1);
-    dim_cent = size(in_ind, 2);
-    
-    % Encontrando o cluster mais proximo a cada um dos clusters
-    indices = proximos(in_ind);
 
-    % Calculando pertinencia de cada dado
-    pertinencia_ = pertinencia(in_ind, dados);
+    no_cent = size(ind, 1);
+    dim_cent = size(ind, 2);
 
-    % Como cada centroide modificara a pertinencia dos dados,
-    % copio o vetor pertinencia para cada centroide
-    pertinencia_ = repmat(pertinencia_, qtde_cent, 1);
+    % If only two centroid, cannot merge
+    if no_cent ~= 2
 
-    % Matriz que armazenara novos individuos teste. Como dois clusters serao
-    % fundidos, a quantidade de linhas do individuo sera qtde_cent - 1,
-    % mas utilizarei qtde_cent pra facilitar algumas coisas. Depois tirarei
-    % a linha extra.
-    % Sera um novo individuo para cada centroide
-    new_inds = inf*ones(qtde_cent, dim_cent, qtde_cent);
+        % Finding nearest cluster to each of the clusters    
+        nearest_indices = proximos(ind);
 
-    % Gerando nova matriz de pertinencia, fundindo clusters mais proximos
-    % Iterando nos centroides do individuo
-    for i = 1:qtde_cent
+        % Finding the belongingness of each data sample
+        pertinency = pertinencia(ind, data);
 
-         % Iterando nos dados. O dado que tiver pertinencia igual a indices(i)
-         % tera sua pertinencia modificada para i
-        for j = 1:qtde_dados
-            if pertinencia_(i,j) == indices(i)
-                pertinencia_(i,j) = i;
+        best_fitness = 0;
+
+        % Merging all clusters with the one closest to them    
+        for i = 1:no_cent
+            
+            [candidate, cand_fitness] = submerge(ind, data, i, ...
+                nearest_indices(i), pertinency, fitness_w);
+
+            if cand_fitness > best_fitness
+                best_fitness = cand_fitness;
+                new_ind = candidate;
             end
+
         end
+
+        time_ = toc;
+        out_list{1} = new_ind;
+        out_list{2} = time_;
+
+    else
+
+        % Return original individual
+        out_list{1} = ind;
+        out_list{2} = toc;
+
     end
 
-    count = 0;
-    % Gerando os individuos teste para cada centroide 
-    % Sinto muito, mas eh praticamente impossivel explicar esse
-    % raciocinio em poucas palavras. O que importa eh q funciona perfeitamente.
-    for i = 1:qtde_cent
-        for j = 1:dim_cent
-            for k = unique(pertinencia_(i,:))
-                new_inds(k, j, i) = 0;
-                for z = 1:qtde_dados
-                    if pertinencia_(i,z) == k
-                        new_inds(k,j,i) = new_inds(k,j,i) + dados(z,j);             
-                        count = count + 1;
-                    end
-                end
-                new_inds(k,j,i) = new_inds(k,j,i)/count;
-                count = 0;
-            end
-        end
-    end
+% Subfunction: merges two centroids.
 
-    % Caso tenha havido centroide sem nenhum dado, seu valor sera infinito,
-    % causando erro. Para resolver, preciso manter os centroides com o valor de
-    % antes. O unico centroide que deve permanecer infinito eh o centroide mais
-    % proximo. 
+function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, pertinency, fitness_w)
 
-    for k = 1:qtde_cent
-        for i = 1:qtde_cent 
-            if (new_inds(i,1,k) == inf) & (indices(k) ~= i)
-                new_inds(i,:,k) = in_ind(i,:);
-            end
-        end
-    end
+    % Finding data belonging to both centroids
+    data_both = data((pertinency == cent1_index) | (pertinency == cent2_index),:);
 
-    % Retirando linhas com infinito dos novos individuos
-    new_inds = reshape(new_inds, 1, qtde_cent*qtde_cent*dim_cent);
-    inf_ind = [];
-    for i = 1:size(new_inds,2)
-        if new_inds(i) == inf
-            inf_ind = [inf_ind i];
-        end
-    end
-    new_inds(inf_ind) = [];
-
-    % Criando variavel que armazena qtde de individuos, pra deixar a leitura
-    % mais clara.
-    qtde_ind = qtde_cent;
-    new_inds = reshape(new_inds, qtde_cent-1, dim_cent, qtde_ind);
-
-    % Criando uma lista com os individuos new_inds para pegar o de maior
-    % aptidao.
-    new_inds_list = {};
-    for i = 1:qtde_ind
+    % If no data is assigned to any of those two centroids, make data_both = data
+    if isempty(data_both)
         
-        % If there are only 2 centroids, cannot merge (fitness function wont
-        % work for 1 centroid). Will just repeat input ind
-        if qtde_cent == 2
-            new_inds_list{i} = in_ind;
-        else
-            new_inds_list{i} = new_inds(:,:,i);
-        end
+        data_both = data;
+
     end
 
-    % Avaliando o melhor individuo dentre aqueles em new_inds
+    % Finding new centroid coordinates related to data_both
+    new_cent = mean(data_both);
 
-    out_ind = pega_melhor(new_inds_list, dados, pesos_aptidao);
-    out_list{1} = out_ind;
-    out_list{2} = toc;
+    % Building new individual with new centroid. Deleting one of them and
+    % overwriting the other.
+    ind(cent1_index,:) = [];
+    ind(cent2_index,:) = new_cent;
+
+    new_ind = ind;
+    new_fitness = fitness(new_ind, data, fitness_w);
+
+

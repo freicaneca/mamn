@@ -11,7 +11,7 @@ como mais proximo; o terceiro tem o primeiro; o quarto tem o terceiro.
 %}
 
 function indices = proximos2(ind)
-
+tic;
     dim_cent = size(ind,2);
     qtde_cent = size(ind,1);
     indices = zeros(1, dim_cent);
@@ -21,6 +21,7 @@ function indices = proximos2(ind)
         
         % Calculating the difference between ind(i,:) and all other centroids
         % except itself
+        %dif = repmat(ind(i,:),(qtde_cent-1),1) - ind((1:qtde_cent~=i),:);
         dif = ind(i,:) - ind((1:qtde_cent~=i),:);
 
         % Taking the index of the smallest distance
@@ -35,3 +36,4 @@ function indices = proximos2(ind)
 
         indices(i) = index_;
     end
+toc
