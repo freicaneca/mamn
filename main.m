@@ -53,6 +53,8 @@ function [] = main(dataset, pop_size, max_gen, alg)
         ga_contrib(dados, pop_size, max_gen, pop);
 
     end
+    
+end
 
 
 

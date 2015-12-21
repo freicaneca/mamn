@@ -139,7 +139,7 @@ function [bestSolution] = ga(data, solutions, stop, pop)
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
 
-       counter = counter + 1
+       counter = counter + 1;
         
     end
     
@@ -154,8 +154,8 @@ function [bestSolution] = ga(data, solutions, stop, pop)
     bestSolution = pop{i};
 
     % Printing
-    bestSolution
-    popFitness(i)
+    %bestSolution
+    %popFitness(i)
     
 end
 
