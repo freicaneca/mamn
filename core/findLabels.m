@@ -15,26 +15,28 @@
 %%%%%%%%%%
 function [resultLabels] = findLabels(ind, dados, labels)
 
-    [ri,ci] = size(ind);
-    [rd,cd] = size(dados);
-    resultLabels = zeros(rd,1);
+    const = 0.5;   % Constante temporária
+
+    [ri,~] = size(ind);
+    [rd,~] = size(dados);
+    
     tempLabels = zeros(rd,1);
 
     for i = 1:rd
         temp = [dados(i,:);ind];
         distances = pdist(temp);
-        distances = distances(1:ri);    % Pega só as distancias do ponto para todos os clusters
+        distances = distances(1:ri);            % Pega só as distancias do ponto para todos os clusters
         
-        [~,index] = sort(distances);    % Ordena as distancias procurando a menor
+        [~,index] = sort(distances);            % Ordena as distancias procurando a menor
         
-        tempLabels(i) = index(1);       % Pega o indice do cluster mais próximo
+        tempLabels(i) = index(1) + const;       % Pega o indice do cluster mais próximo
     end
     
-    clusterIndex = zeros(ri,1);
+    for i = 1:ri
+        temp = labels(tempLabels == (i + const));
+        class = mode(temp);
+        tempLabels(tempLabels == (i + const)) = class;
+    end
     
-    
-    
-
-
-
+    resultLabels = tempLabels;
 end
