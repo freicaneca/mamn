@@ -1,0 +1,32 @@
+%%%%%%%%%%
+%
+% FUNÇÃO: db - Davies-Bouldin
+%
+% ENTRADA:
+%
+% - ind: Cromossomo com os clusters
+% - dados: Base de dados sendo utilizada
+%
+% SAÍDA:
+%
+% - result: o valor da função calculada
+%
+%%%%%%%%%%
+function [resultLabels] = findLabels(ind, dados, labels)
+
+    [ri,ci] = size(ind);
+    [rd,cd] = size(dados);
+    resultLabels = zeros(length,1)
+
+    for i = 1:rd
+        temp = [dados(i,:);ind];
+        distances = pdist(temp);
+        distances = distances(1:ri);
+        
+        [v,i] = sort(distances);
+    end
+    
+
+
+
+end
