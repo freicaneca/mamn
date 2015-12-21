@@ -38,35 +38,22 @@ function [] = main(dataset, pop_size, max_gen, alg)
     if strcmp(alg, 'both')
     
         fprintf('\n###\nORIGINAL\n###');
-        
-        % Código modificado para adicionar as alterações de resumo, por
-        % Thiago Moura em: 21/12/2015
-        
         tic;
         ga(dados, pop_size, max_gen, pop);
         time_original = toc;
         
         fprintf('\n###\nMODIFIED\n###');
-        
-        tic;
         ga_contrib(dados, pop_size, max_gen, pop);
-        time_contrib = toc;
 
     elseif strcmp(alg, 'original')
 
         fprintf('\n###\nORIGINAL\n###');
-        
-        tic;
         ga(dados, pop_size, max_gen, pop);
-        time_original = toc;
     
     elseif strcmp(alg, 'modified')
 
         fprintf('\n###\nMODIFIED\n###');
-        
-        tic;
         ga_contrib(dados, pop_size, max_gen, pop);
-        time_contrib = toc;
 
     end
 end

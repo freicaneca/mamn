@@ -19,7 +19,7 @@
 % >> ga('wine', 100, 20);
 %
 %%%%%%%%%%
-function [bestSolution] = ga(data, solutions, stop, pop)
+function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -128,7 +128,7 @@ function [bestSolution] = ga(data, solutions, stop, pop)
        [pop, PDmax, count_PD] = selecao_RTS_adaptativo(pop, popFitness, solutions,...
            offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
 
-       counter = counter + 1
+       counter = counter + 1;
         
     end
     
@@ -140,11 +140,8 @@ function [bestSolution] = ga(data, solutions, stop, pop)
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end    
     [~,i] = max(popFitness);
-    bestSolution = pop{i};
-    
-    % Printing
-    bestSolution
-    popFitness(i)
+    bestInd = pop{i};                % Best Individuo
+    bestSolution = popFitness(i);    % Best Fitness Result
 
 end
 

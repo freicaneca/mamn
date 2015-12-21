@@ -16,10 +16,10 @@
 %
 % EXEMPLO DE COMO CHAMAR ESSA FUNÇÃO:
 %
-% >> ga('wine', 100, 20);
+% >> ga_contrib('wine', 100, 20);
 %
 %%%%%%%%%%
-function [bestSolution] = ga(data, solutions, stop, pop)
+function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -139,7 +139,7 @@ function [bestSolution] = ga(data, solutions, stop, pop)
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
 
-       counter = counter + 1
+       counter = counter + 1;
         
     end
     
@@ -151,11 +151,8 @@ function [bestSolution] = ga(data, solutions, stop, pop)
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end    
     [~,i] = max(popFitness);
-    bestSolution = pop{i};
-
-    % Printing
-    bestSolution
-    popFitness(i)
+    bestInd = pop{i};                % Best Individuo
+    bestSolution = popFitness(i);    % Best Fitness Result
     
 end
 
