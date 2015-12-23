@@ -54,6 +54,7 @@ function new_ind = kmeans(ind, dados)
             new_ind(i,:) = ind(i,:);
         end
     end
+end
 
     
     

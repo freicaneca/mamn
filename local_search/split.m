@@ -38,6 +38,7 @@ function out_list = split2(ind, data, fitness_w)
 
     out_list{1} = out_ind;
     out_list{2} = toc;
+end
 
 
 
@@ -65,5 +66,6 @@ function [new_ind, new_fitness] = subsplit(ind, cent_index, data, fitness_w, per
     ind(cent_index,:) = [];
     new_ind = [ind; new_cent_subtract; new_cent_add];
     new_fitness = fitness(new_ind, data, fitness_w);
+end
 
     

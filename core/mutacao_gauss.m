@@ -38,3 +38,4 @@ function new_ind = mutacao_gauss(ind, p, sigma, min_valor, max_valor)
     end
 
     new_ind = ind;
+end

@@ -115,7 +115,7 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
        end
 
        % Picking offspring from the population
-       offspring = {pop{solutions:end}};
+       offspring = pop{solutions:end};
 
        % Calculating fitness of offspring
 
