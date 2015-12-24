@@ -1,25 +1,25 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: db - Davies-Bouldin
+% FUNï¿½ï¿½O: db - Davies-Bouldin
 %
 % ENTRADA:
 %
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - result: o valor da função calculada
+% - result: o valor da funï¿½ï¿½o calculada
 %
 %%%%%%%%%%
 function [result] = db(ind, dados)
 
     [clusters,~] = size(ind);
     
-    D = pdist(ind);                         % calcula todas as distâncias euclidianas
-    distances = squareform(D);              % matriz de distâncias
+    D = pdist(ind);                         % calcula todas as distï¿½ncias euclidianas
+    distances = squareform(D);              % matriz de distï¿½ncias
     
-    s = espacamentos(clusters, ind, dados);     % vetor de espaçamentos
+    s = espacamentos(clusters, ind, dados);     % vetor de espaï¿½amentos
     
     soma = 0;
     for i=1:clusters
@@ -42,29 +42,29 @@ function [result] = db(ind, dados)
     
     result = soma / clusters;
     
-    saveMinMax(result);  % salva os valores de máximo e mínimo globalmente
+    saveMinMax(result);  % salva os valores de mï¿½ximo e mï¿½nimo globalmente
     
 end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: espacamentos
+% FUNï¿½ï¿½O: espacamentos
 %
 % ENTRADA:
 %
-% - totalClusters: Número total de clusters
+% - totalClusters: Nï¿½mero total de clusters
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - resultS: vetor com os valores dos espaçamentos para todos os clusters
+% - resultS: vetor com os valores dos espaï¿½amentos para todos os clusters
 % do cromossomo
 %
 %%%%%%%%%%
 function [resultS] = espacamentos(totalClusters, ind, dados)
 
-    resultS = zeros(totalClusters,1);             % vetor de espaçamentos
+    resultS = zeros(totalClusters,1);             % vetor de espaï¿½amentos
     
     pert = pertinencia(ind, dados);               % a que clusters os dados pertencem
     
@@ -77,9 +77,11 @@ function [resultS] = espacamentos(totalClusters, ind, dados)
                
         for j=1:c
             
-            x = [tempDados(j,:);ind(i,:)];
-            d = pdist(x);
-            somaDistancias = somaDistancias + d;
+            if(~isempty(tempDados))
+                x = [tempDados(j,:);ind(i,:)];
+                d = pdist(x);
+                somaDistancias = somaDistancias + d;
+            end
         
         end
         
@@ -92,7 +94,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: saveMinMax
+% FUNï¿½ï¿½O: saveMinMax
 %
 %%%%%%%%%%
 function [] = saveMinMax(value)

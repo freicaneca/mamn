@@ -1,17 +1,17 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: i_index - I-index
+% FUNï¿½ï¿½O: i_index - I-index
 %
 % ENTRADA:
 %
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
-% - e1: Constante a ser passada para a função
-% - p: Constante a ser passada para a função
+% - e1: Constante a ser passada para a funï¿½ï¿½o
+% - p: Constante a ser passada para a funï¿½ï¿½o
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - resultI: o valor da função calculada
+% - resultI: o valor da funï¿½ï¿½o calculada
 %
 %%%%%%%%%%
 function [resultI] = i_index(ind, dados, e1, p)
@@ -30,7 +30,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: ek
+% FUNï¿½ï¿½O: ek
 %
 %%%%%%%%%%
 function [resultEk] = ek(ind, dados)
@@ -47,11 +47,14 @@ function [resultEk] = ek(ind, dados)
         
         somaDistancias = 0;      
         for j=1:elements
-            x = [tempDados(j,:);ind(i,:)];
             
-            d = pdist(x)^2;             % distância ao quadrado
-            
-            somaDistancias = somaDistancias + d;
+            if(~isempty(tempDados))
+                x = [tempDados(j,:);ind(i,:)];
+
+                d = pdist(x)^2;             % distï¿½ncia ao quadrado
+
+                somaDistancias = somaDistancias + d;
+            end
         end
         
         resultEk = resultEk + somaDistancias;
@@ -60,20 +63,27 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: dk
+% FUNï¿½ï¿½O: dk
 %
 %%%%%%%%%%
 function [result] = dk(ind)
 
-    distances = pdist(ind);     % distancia entre todos os clusters
+    [r,~] = size(ind);
     
-    result = max(distances);    % maior distancia entre os clusters   
+     if(r ~= 1)
+        distances = pdist(ind);     % distancia entre todos os clusters
+
+        result = max(distances);    % maior distancia entre os clusters   
+     else
+         result = 0;
+     end
+     
     
 end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: saveMinMax
+% FUNï¿½ï¿½O: saveMinMax
 %
 %%%%%%%%%%
 function [] = saveMinMax(value)

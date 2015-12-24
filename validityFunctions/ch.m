@@ -1,15 +1,15 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: ch - Calinski Harabasz
+% FUNï¿½ï¿½O: ch - Calinski Harabasz
 %
 % ENTRADA:
 %
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - result: o valor da função calculada
+% - result: o valor da funï¿½ï¿½o calculada
 %
 %%%%%%%%%%
 function [result] = ch(ind, dados)
@@ -30,7 +30,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: traceB
+% FUNï¿½ï¿½O: traceB
 %
 %%%%%%%%%%
 function [resultTraceB] = traceB(ind, dados)
@@ -48,7 +48,7 @@ function [resultTraceB] = traceB(ind, dados)
         [elements,~] = size(tempDados);
         
         x = [centroideDados;ind(i,:)];            
-        d = pdist(x)^2;                           % distância ao quadrado
+        d = pdist(x)^2;                           % distï¿½ncia ao quadrado
         
         resultTraceB = resultTraceB + (elements * d);
     end
@@ -57,7 +57,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: traceW
+% FUNï¿½ï¿½O: traceW
 %
 %%%%%%%%%%
 function [resultTraceW] = traceW(ind, dados)
@@ -74,11 +74,14 @@ function [resultTraceW] = traceW(ind, dados)
         
         somaDistancias = 0;      
         for j=1:elements
-            x = [tempDados(j,:);ind(i,:)];
             
-            d = pdist(x)^2;             % distância ao quadrado
-            
-            somaDistancias = somaDistancias + d;
+            if(~isempty(tempDados))
+                x = [tempDados(j,:);ind(i,:)];
+
+                d = pdist(x)^2;             % distï¿½ncia ao quadrado
+
+                somaDistancias = somaDistancias + d;
+            end
         end
         
         resultTraceW = resultTraceW + somaDistancias;
@@ -87,7 +90,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: saveMinMax
+% FUNï¿½ï¿½O: saveMinMax
 %
 %%%%%%%%%%
 function [] = saveMinMax(value)
