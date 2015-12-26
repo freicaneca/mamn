@@ -15,7 +15,7 @@ elemento 1: individuo
 elemento 2: tempo
 %}
 
-function out_list = split2(ind, data, fitness_w)
+function out_list = split(ind, data, fitness_w)
 
     tic;
 
