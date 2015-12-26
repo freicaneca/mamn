@@ -61,10 +61,13 @@ function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, 
     % Finding data belonging to both centroids
     data_both = data((pertinency == cent1_index) | (pertinency == cent2_index),:);
 
-    % If no data is assigned to any of those two centroids, make data_both = data
+    % If no data is assigned to any of those two centroids, return same ind
     if isempty(data_both)
         
-        data_both = data;
+        %data_both = data;
+        new_ind = ind;
+        new_fitness = fitness(new_ind, data, fitness_w);
+        return
 
     end
 

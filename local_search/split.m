@@ -48,9 +48,12 @@ function [new_ind, new_fitness] = subsplit(ind, cent_index, data, fitness_w, per
     % Data belonging to the centroid
     data_pert = data(pertinency==cent_index,:);
 
-    % If no data belongs to centroid, consider all data
+    % If no data belongs to centroid, return same ind
     if isempty(data_pert)
-        data_pert = data;
+        %data_pert = data;
+        new_ind = ind;
+        new_fitness = fitness(new_ind, data, fitness_w);
+        return
     end
 
     % Finding maximum standard deviation among data_pert dimensions
