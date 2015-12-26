@@ -1,14 +1,14 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: fitness
+% FUNï¿½ï¿½O: fitness
 %
 % ENTRADA:
 %
 % - ind: Cromossomo com os clusters
 % - dados: Base de dados sendo utilizada
-% - pesos: Vetor - Pesos das funções no cálculo da função de fitness
+% - pesos: Vetor - Pesos das funï¿½ï¿½es no cï¿½lculo da funï¿½ï¿½o de fitness
 %
-% SAÍDA:
+% SAï¿½DA:
 %
 % - result: fitness do cromossomo
 %
@@ -17,7 +17,7 @@ function [result] = fitness(ind, dados, pesos)
 
     resultDB = db(ind, dados);
     resultCH = ch(ind, dados);
-    resultI_index = i_index(ind, dados, 2, 2);  % O valor de E1 foi colocado 2 (POR ENQUANTO) <==== OBSERVAÇÃO IMPORTANTE
+    resultI_index = i_index(ind, dados, 2, 2);  % O valor de E1 foi colocado 2 (POR ENQUANTO) <==== OBSERVAï¿½ï¿½O IMPORTANTE
 
     normalize_resultDB = normalizeDB(resultDB);
     normalize_resultCH = normalizeCH(resultCH);

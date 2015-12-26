@@ -125,7 +125,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
        end
 
        % Picking offspring from the population
-       offspring = {pop{solutions:end}};
+       offspring = pop{solutions:end};
 
        % Calculating fitness of offspring
 
@@ -134,7 +134,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
        end
        
        % Probabilistic crowding. Picking old population (before generating offspring)
-       old_pop = {pop{1:solutions}};
+       old_pop = pop{1:solutions};
 
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);

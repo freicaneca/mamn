@@ -53,6 +53,7 @@ function out_list = merge(ind, data, fitness_w)
         out_list{2} = toc;
 
     end
+end
 
 % Subfunction: merges two centroids.
 
@@ -81,5 +82,6 @@ function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, 
 
     new_ind = ind;
     new_fitness = fitness(new_ind, data, fitness_w);
+end
 
 

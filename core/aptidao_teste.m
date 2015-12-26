@@ -18,3 +18,4 @@ function aptidao = aptidao_teste(ind)
         aptidao = aptidao + ind(i,j);
     end
   end
+end

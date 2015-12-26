@@ -1,48 +1,48 @@
 function [popNova] = RTS (popVelha, Aptidao, mi, filhos, w, dados, pesos)
 
 %{
-Função seleciona os indivíduos através do métodos RTS
-que serão considerados na geração seguinte
+Funï¿½ï¿½o seleciona os indivï¿½duos atravï¿½s do mï¿½todos RTS
+que serï¿½o considerados na geraï¿½ï¿½o seguinte
 
 ----------------------------Entradas-----------------------------
- popVelha = População após o processo de seleção de indivíduos
+ popVelha = Populaï¿½ï¿½o apï¿½s o processo de seleï¿½ï¿½o de indivï¿½duos
  filhos = 
- w  = "window" número de valores que serão gerados aleatórios
- mi = valor máximo possível gerado por essa função 
-      (representa o número de indivíduos da população)
- Aptidao - Aptidao dos indivíduos da população
+ w  = "window" nï¿½mero de valores que serï¿½o gerados aleatï¿½rios
+ mi = valor mï¿½ximo possï¿½vel gerado por essa funï¿½ï¿½o 
+      (representa o nï¿½mero de indivï¿½duos da populaï¿½ï¿½o)
+ Aptidao - Aptidao dos indivï¿½duos da populaï¿½ï¿½o
 
-------------------------------Saída------------------------------
-popNova = População após o processo de seleção de indivíduos
+------------------------------Saï¿½da------------------------------
+popNova = Populaï¿½ï¿½o apï¿½s o processo de seleï¿½ï¿½o de indivï¿½duos
 -----------------------------------------------------------------
 
 Autor: Valter Augusto de Freitas Barbosa                                        
-Aluno de Mestrado em Eng. Biomédica - CTG / UFPE                     
-Data de criação: 07/12/2015                                             
-Data de atualização: 07/12/2015 
+Aluno de Mestrado em Eng. Biomï¿½dica - CTG / UFPE                     
+Data de criaï¿½ï¿½o: 07/12/2015                                             
+Data de atualizaï¿½ï¿½o: 07/12/2015 
 
 %}
 
 popNova = popVelha;
 
-%Para cada filho aplicar a seleção (lambda = mi)
+%Para cada filho aplicar a seleï¿½ï¿½o (lambda = mi)
 for i = 1:mi
-    % Seleciona w indivíduos a serem comparados com 1 filho
+    % Seleciona w indivï¿½duos a serem comparados com 1 filho
     [indSelec] = gera_aleat (w, mi);
-    % Analisa entre os w indivíduos aquele que for mais proximo do filho em
-    % questão
+    % Analisa entre os w indivï¿½duos aquele que for mais proximo do filho em
+    % questï¿½o
     distancia = zeros(1,w);
     for j = 1:w
         distancia(j) = distEuclid( filhos{i}, popNova{indSelec(j)} );
     end
     [~, IndProx] = min(distancia);
-    %IndProx é o índice do individuo de popNova mais proximo do filho{i}
+    %IndProx ï¿½ o ï¿½ndice do individuo de popNova mais proximo do filho{i}
     IndProx = indSelec(IndProx);
     
     % Comparar filhos{i} com popVelha{IndProx}
     [result_filho] = fitness(filhos{i}, dados, pesos);
     %%%%%
-    %Ao colocar Aptidao como entrada não é necessário calcular a aptidão de
+    %Ao colocar Aptidao como entrada nï¿½o ï¿½ necessï¿½rio calcular a aptidï¿½o de
     %nenhum pai
     %[result_IndProx] = fitness(popNova{IndProx}, dados, pesos);
     %%%%%
