@@ -109,6 +109,7 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
 
        for i = 1:length(pop)
             
+           %pop{i}
            pop{i} = controlador_busca_local(pop{i}, bestFitness,...
                local_search_filename, dados, pesos);
 
