@@ -109,7 +109,6 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
 
        for i = 1:length(pop)
             
-           pop{i}
            pop{i} = controlador_busca_local(pop{i}, bestFitness,...
                local_search_filename, dados, pesos);
 
@@ -129,7 +128,7 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
        [pop, PDmax, count_PD] = selecao_RTS_adaptativo(pop, popFitness, solutions,...
            offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
 
-       counter = counter + 1
+       counter = counter + 1;
         
     end
     

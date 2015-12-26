@@ -119,7 +119,6 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
 
        for i = 1:length(pop)
             
-           pop{i}
            pop{i} = controlador_busca_local(pop{i}, bestFitness,...
                local_search_filename, dados, pesos);
 
@@ -140,7 +139,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
 
-       counter = counter + 1
+       counter = counter + 1;
         
     end
     
