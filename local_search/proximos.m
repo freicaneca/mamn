@@ -14,7 +14,7 @@ function indices = proximos(ind)
 
     dim_cent = size(ind,2);
     qtde_cent = size(ind,1);
-    indices = zeros(1, dim_cent);
+    indices = zeros(1, qtde_cent);
 
     % Encontrando o cluster mais proximo a cada um dos clusters
     for i = 1:qtde_cent
