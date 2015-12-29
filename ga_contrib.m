@@ -34,7 +34,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.25;
+    p = 0.99;
 
     % Gradient mutation initial step size
     passo = 1;
@@ -109,6 +109,9 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
            % Adding offspring to population
            pop_temp{end+1} = filho1;
            pop_temp{end+1} = filho2;
+           if any(any(isnan(filho1))) | any(any(isnan(filho2)))
+            error('eh nan!!!');
+           end
 
        end
 
@@ -179,6 +182,8 @@ function [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, p
     popFitness, dados, pesos, p)
 
     [filho1, filho2] = crossover(pai1, pai2);
+    %filho1
+    %filho2
 
     % Checking mutation probability
     num = rand;
@@ -197,6 +202,8 @@ function [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, p
         % New offspring are the first item in offspring list
         filho1 = lista_filho1_passo{1};
         filho2 = lista_filho2_passo{1};
+        %filho1
+        %filho2
 
     else
 

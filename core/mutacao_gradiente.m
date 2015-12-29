@@ -21,16 +21,6 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
     % Pegando indice dos vizinhos proximos  
     indices_proximos = pega_vizinhos_proximos(ind, n, populacao);
 
-    % Construindo um vetor de subpopulacao onde todos os individuos tem o mesmo
-    % numero de centroides de ind. Os individuos tambem serao transformados
-    % numa linha para facilitar o calculo do gradiente.
-
-    %for i = 1:length(indices_proximos)
-    %    ind_linha = reshape(populacao{indices_proximos(i)}, 1, dim_cent*no_cent);
-    %    subpop(i,:) = ind_linha;
-    %    subpop_aptidao(i) = matriz_aptidao(i);
-    %end
-
     % O vetor que indica a direcao do gradiente eh igual a ind - subpop(i). O
     % sentido pode ser positivo ou negativo, dependendo da diferenca entre
     % aptidao de ind e de subpop(i). Somando as contribuicoes de cada membro de
@@ -60,7 +50,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
     % Como so importa a direcao do gradiente, podemos transforma-lo num vetor
     % unitario dividindo por sua norma.
 
-    grad_norm = grad/norm(grad);
+    grad_norm = grad/(norm(grad)+0.000001);
 
     % Atualizando ind. Sera transformado em linha para ser adicionado ao grad
     % (que esta em linha) multiplicado pelo passo.

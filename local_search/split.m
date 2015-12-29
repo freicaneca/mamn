@@ -61,13 +61,14 @@ function [new_ind, new_fitness] = subsplit(ind, cent_index, data, fitness_w, per
     [max_std, max_index] = max(std(data_pert));
 
     % Adding and subtracting to new centroids dimensions
-    ind(cent_index, max_index) = max_std + ind(cent_index, max_index);
-    new_cent_add = ind(cent_index,:);
-    ind(cent_index, max_index) = ind(cent_index, max_index) - 2*max_std;
-    new_cent_subtract = ind(cent_index,:);
+    new_ind = ind;
+    new_ind(cent_index, max_index) = max_std + new_ind(cent_index, max_index);
+    new_cent_add = new_ind(cent_index,:);
+    new_ind(cent_index, max_index) = new_ind(cent_index, max_index) - 2*max_std;
+    new_cent_subtract = new_ind(cent_index,:);
 
-    ind(cent_index,:) = [];
-    new_ind = [ind; new_cent_subtract; new_cent_add];
+    new_ind(cent_index,:) = [];
+    new_ind = [new_ind; new_cent_subtract; new_cent_add];
     new_fitness = fitness(new_ind, data, fitness_w);
 end
 

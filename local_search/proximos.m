@@ -21,7 +21,7 @@ function indices = proximos(ind)
         % Centroide atual
         atual_cent = ind(i,:);
         % Valor inicial da menor distancia tem que ser alto
-        menor_dist = 999999;
+        menor_dist = 999999999;
 
         % Iterando nos outros centroides
         for j = 1:qtde_cent

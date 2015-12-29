@@ -59,6 +59,8 @@ end
 
 function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, pertinency, fitness_w)
 
+    %cent1_index
+    %cent2_index
     % Finding data belonging to both centroids
     data_both = data((pertinency == cent1_index) | (pertinency == cent2_index),:);
 
@@ -77,10 +79,11 @@ function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, 
 
     % Building new individual with new centroid. Deleting one of them and
     % overwriting the other.
-    ind(cent1_index,:) = [];
-    ind(cent2_index,:) = new_cent;
 
     new_ind = ind;
+    new_ind(cent1_index,:) = [];
+    new_ind(cent2_index,:) = new_cent;
+
     new_fitness = fitness(new_ind, data, fitness_w);
 end
 
