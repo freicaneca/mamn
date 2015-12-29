@@ -80,6 +80,9 @@ function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, 
     % Building new individual with new centroid. Deleting one of them and
     % overwriting the other.
 
+    fprintf('cent1_index: %f\n',cent1_index);
+    fprintf('cent2_index: %f\n',cent2_index);
+    
     new_ind = ind;
     new_ind(cent1_index,:) = [];
     new_ind(cent2_index,:) = new_cent;
