@@ -22,7 +22,7 @@ OUTPUTS (as prints):
 function [] = mainSimples(dataset, pop_size, max_gen, K)
 
     %%%%%%%%%
-    % Código mais simples com o uso de K repetições
+    % Cï¿½digo mais simples com o uso de K repetiï¿½ï¿½es
     %%%%%%%%%
     aveFitnessOrig = 0;
     aveFitnessCont = 0;
@@ -49,6 +49,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
         %%%%%%%%%%%%%%%%
         % Dados do GA original
         %%%%%%%%%%%%%%%%
+
         tic;
         [tempFit,ind] = ga(dados, pop_size, max_gen, pop);
         time_original = toc;
@@ -62,7 +63,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
         aveRIOrig = aveRIOrig + tempRandi;
         
         [rInd, ~] = size(ind);
-        clustersOrig(i) = rInd; % Número de clusters do resultado
+        clustersOrig(i) = rInd; % Nï¿½mero de clusters do resultado
 
         %%%%%%%%%%%%%%%%
         % Dados do GA modificado
@@ -94,14 +95,14 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
     aveRICont = aveRICont/K;
     
     %%%%%%%%%%%%%%%%
-    % Montagem do arquivo texto com os dados para tabulação
+    % Montagem do arquivo texto com os dados para tabulaï¿½ï¿½o
     %%%%%%%%%%%%%%%%
-    filename = strcat('results/', dataset, '.txt');
+    filename = strcat('mamn/results/', dataset, '.txt');
 
     fileID = fopen(filename,'w');
-    fprintf(fileID,'Média do Fitness - Média do Tempo - Média do RI - #Clusters - Count Cluster\n');
+    fprintf(fileID,'Media do Fitness - Media do Tempo - Media do RI - #Clusters - Count Cluster\n');
     fprintf(fileID,'Primeira Linha: ORIGINAL\n');
-    fprintf(fileID,'Segunda Linha: CONTRIBUIÇÃO\n');
+    fprintf(fileID,'Segunda Linha: CONTRIBUICAO\n');
 
     [MOrig,FOrig] = mode(clustersOrig);
     [MCont,FCont] = mode(clustersCont);
