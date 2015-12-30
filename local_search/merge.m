@@ -14,8 +14,6 @@ elemento 2: tempo
 function out_list = merge(ind, data, fitness_w)
 
     tic;
-
-    ind
     no_cent = size(ind, 1);
     dim_cent = size(ind, 2);
 
@@ -80,10 +78,6 @@ function [new_ind, new_fitness] = submerge(ind, data, cent1_index, cent2_index, 
 
     % Building new individual with new centroid. Deleting one of them and
     % overwriting the other.
-    
-    if(cent2_index == 0)
-        s = 1;
-    end
     
     new_ind = ind;
     new_ind(cent1_index,:) = [];
