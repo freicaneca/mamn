@@ -1,20 +1,20 @@
 %%%%%%%%%%
 %
-% FUNÇÃO: ga - Genetic Algorithm
+% FUNï¿½ï¿½O: ga - Genetic Algorithm
 %
 % ENTRADA:
 %
 % - data: data to be used (matrix)
-% - solutions: Quantidade de soluções a serem geradas inicialmente
-% - stop: Quantidade de gerações a serem executadas sem que o valor de
+% - solutions: Quantidade de soluï¿½ï¿½es a serem geradas inicialmente
+% - stop: Quantidade de geraï¿½ï¿½es a serem executadas sem que o valor de
 % melhor fitness seja alterado
 % - pop: initial population
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - bestSolution: Melhor solução de fitness
+% - bestSolution: Melhor soluï¿½ï¿½o de fitness
 %
-% EXEMPLO DE COMO CHAMAR ESSA FUNÇÃO:
+% EXEMPLO DE COMO CHAMAR ESSA FUNï¿½ï¿½O:
 %
 % >> ga('wine', 100, 20);
 %
@@ -64,20 +64,21 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
     max_value = max(max(dados));
     
     %%%%%%%%%
-    % Gera população inicial
+    % Gera populaï¿½ï¿½o inicial
     %%%%%%%%%
     %pop = geraPopulacao(dados, solutions);
     
     %%%%%%%%%
-    % Calcula o Fitness de toda a população inicial
+    % Calcula o Fitness de toda a populaï¿½ï¿½o inicial
     %%%%%%%%%
     popFitness = zeros(solutions,1);
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
+    popFitness(1) = fitness(pop{1}, dados, pesos);  % Escapar do NaN
     
     %%%%%%%%%
-    % Repetição até que o critério de parada seja atingido
+    % Repetiï¿½ï¿½o atï¿½ que o critï¿½rio de parada seja atingido
     %%%%%%%%%
     counter = 0;
     bestFitness = max(popFitness);
@@ -133,7 +134,7 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
     end
     
     %%%%%%%%%
-    % Seleciona solução com o melhor fitness
+    % Seleciona soluï¿½ï¿½o com o melhor fitness
     %%%%%%%%%
     popFitness = zeros(solutions,1);
     for i=1:solutions
@@ -147,7 +148,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: crossMutacao - Faz o crossover e a mutação
+% FUNï¿½ï¿½O: crossMutacao - Faz o crossover e a mutaï¿½ï¿½o
 %
 %%%%%%%%%%
 function [filho1, filho2] = crossMutacao(pai1, pai2, p, sigma, min_valor, max_valor)
