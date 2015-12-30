@@ -4,7 +4,7 @@
 %
 % ENTRADA:
 %
-% - data: data to be used (matrix)
+% - dados: data to be used (matrix)
 % - solutions: Quantidade de solu��es a serem geradas inicialmente
 % - stop: Quantidade de gera��es a serem executadas sem que o valor de
 % melhor fitness seja alterado
@@ -19,7 +19,7 @@
 % >> ga('wine', 100, 20);
 %
 %%%%%%%%%%
-function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
+function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -34,7 +34,7 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.05;
+    p = 0.01;
 
     % Gaussian mutation standard deviation
     sigma = 1;
@@ -49,13 +49,6 @@ function [bestSolution, bestInd] = ga(data, solutions, stop, pop)
     % Setting w_min and w_max
     w_min = round(solutions/20);
     w_max = round(solutions/2);
-
-    %%%%%%%%%
-    % Carrega dados da base de dados passada
-    %%%%%%%%%    
-    %fprintf('\nDATASET: %s\n', dataset);
-    %[dados, ~] = loadData(sprintf('data/%s.data', dataset));    % Elimina a coluna de Labels (classes)
-    dados = data;
 
     %%%%%%%%%
     % Finding minimum and maximum values in data (for mutation)
