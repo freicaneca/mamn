@@ -37,7 +37,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     p = 0.99;
 
     % Gradient mutation initial step size
-    passo = 1;
+    passo = 0.5;
 
     % Gradient mutation number of neighbors to analyze
     n = 4;
@@ -75,6 +75,9 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
+
+    %popFitness
+    %pop{1}
     
     %%%%%%%%%
     % Repetição até que o critério de parada seja atingido
@@ -109,9 +112,9 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
            % Adding offspring to population
            pop_temp{end+1} = filho1;
            pop_temp{end+1} = filho2;
-           if any(any(isnan(filho1))) | any(any(isnan(filho2)))
-            error('eh nan!!!');
-           end
+           %if any(any(isnan(filho1))) | any(any(isnan(filho2)))
+           % error('eh nan!!!');
+           %end
 
        end
 
@@ -182,6 +185,8 @@ function [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, p
     popFitness, dados, pesos, p)
 
     [filho1, filho2] = crossover(pai1, pai2);
+    %pai1
+    %pai2
     %filho1
     %filho2
 

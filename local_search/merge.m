@@ -15,6 +15,7 @@ function out_list = merge(ind, data, fitness_w)
 
     tic;
 
+    ind
     no_cent = size(ind, 1);
     dim_cent = size(ind, 2);
 
