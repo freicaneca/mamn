@@ -4,22 +4,22 @@
 %
 % ENTRADA:
 %
-% - dataset: Base de dados que será utilizada
-% - solutions: Quantidade de soluções a serem geradas inicialmente
-% - stop: Quantidade de gerações a serem executadas sem que o valor de
+% - dados: Base de dados que serï¿½ utilizada
+% - solutions: Quantidade de soluï¿½ï¿½es a serem geradas inicialmente
+% - stop: Quantidade de geraï¿½ï¿½es a serem executadas sem que o valor de
 % melhor fitness seja alterado
 % - pop: initial population
 %
-% SAÍDA:
+% SAï¿½DA:
 %
-% - bestSolution: Melhor solução de fitness
+% - bestSolution: Melhor soluï¿½ï¿½o de fitness
 %
-% EXEMPLO DE COMO CHAMAR ESSA FUNÇÃO:
+% EXEMPLO DE COMO CHAMAR ESSA FUNï¿½ï¿½O:
 %
 % >> ga_contrib('wine', 100, 20);
 %
 %%%%%%%%%%
-function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
+function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -34,7 +34,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.99;
+    p = 0.01;
 
     % Gradient mutation initial step size
     passo = 0.5;
@@ -46,17 +46,6 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     local_search_filename = 'local_search.weights';
     delete(local_search_filename);
 
-    % Setting w_min and w_max
-    %w_min = round(solutions/20);
-    %w_max = round(solutions/2);
-
-    %%%%%%%%%
-    % Carrega dados da base de dados passada
-    %%%%%%%%%    
-    %fprintf('\nDATASET: %s\n', dataset);
-    %[dados, ~] = loadData(sprintf('data/%s.data', dataset));    % Elimina a coluna de Labels (classes)
-    dados = data;
-
     %%%%%%%%%
     % Finding minimum and maximum values in data (for mutation)
     %%%%%%%%%
@@ -64,24 +53,16 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     max_value = max(max(dados));
     
     %%%%%%%%%
-    % Gera população inicial
-    %%%%%%%%%
-    %pop = geraPopulacao(dados, solutions);
-    
-    %%%%%%%%%
-    % Calcula o Fitness de toda a população inicial
+    % Calcula o Fitness de toda a populaï¿½ï¿½o inicial
     %%%%%%%%%
     popFitness = zeros(solutions,1);
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
     popFitness(1) = fitness(pop{1}, dados, pesos);  % Escapar do NaN
-
-    %popFitness
-    %pop{1}
     
     %%%%%%%%%
-    % Repetição até que o critério de parada seja atingido
+    % Repetiï¿½ï¿½o atï¿½ que o critï¿½rio de parada seja atingido
     %%%%%%%%%
     counter = 0;
     bestFitness = max(popFitness);
@@ -151,7 +132,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     end
     
     %%%%%%%%%
-    % Seleciona solução com o melhor fitness
+    % Seleciona soluï¿½ï¿½o com o melhor fitness
     %%%%%%%%%
     popFitness = zeros(solutions,1);
     for i=1:solutions
@@ -165,7 +146,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: crossMutacaoGauss - Faz o crossover e a mutação gaussiana
+% FUNï¿½ï¿½O: crossMutacaoGauss - Faz o crossover e a mutaï¿½ï¿½o gaussiana
 %
 %%%%%%%%%%
 function [filho1, filho2] = crossMutacaoGauss(pai1, pai2, p, sigma, min_valor, max_valor)
@@ -179,7 +160,7 @@ end
 
 %%%%%%%%%%
 %
-% FUNÇÃO: crossMutacaoGrad - Faz o crossover e a mutação gradiente
+% FUNï¿½ï¿½O: crossMutacaoGrad - Faz o crossover e a mutaï¿½ï¿½o gradiente
 %
 %%%%%%%%%%
 function [filho1, filho2, novo_passo] = crossMutacaoGrad(pai1, pai2, n, passo, pop,...
