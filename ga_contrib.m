@@ -75,6 +75,7 @@ function [bestSolution, bestInd] = ga_contrib(data, solutions, stop, pop)
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end
+    popFitness(1) = fitness(pop{1}, dados, pesos);  % Escapar do NaN
 
     %popFitness
     %pop{1}
