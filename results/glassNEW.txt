@@ -1,0 +1,5 @@
+Media do Fitness - Media do Tempo - Media do RI - #Clusters - Count Cluster
+Primeira Linha: ORIGINAL
+Segunda Linha: CONTRIBUICAO
+0.56;2893.67;0.00;2;10
+0.57;674.53;0.00;2;10
