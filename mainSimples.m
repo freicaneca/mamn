@@ -24,17 +24,20 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
     %%%%%%%%%
     % C�digo mais simples com o uso de K repeti��es
     %%%%%%%%%
-    aveFitnessOrig = 0;
-    aveFitnessCont = 0;
+    aveFitnessOrig = zeros(K,1);
+    aveFitnessCont = zeros(K,1);
     
-    aveRuntimeOrig = 0;
-    aveRuntimeCont = 0;
+    aveRuntimeOrig = zeros(K,1);
+    aveRuntimeCont = zeros(K,1);
     
-    aveRIOrig = 0;
-    aveRICont = 0;
+    aveRIOrig = zeros(K,1);
+    aveRICont = zeros(K,1);
     
     clustersOrig = zeros(K,1);
     clustersCont = zeros(K,1);
+    
+    indOrig = cell(K,1);
+    indContrib = cell(K,1);
 
     %%%%%%%%%
     % Carrega dados da base de dados passada
@@ -50,54 +53,48 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
         % Dados do GA original
         %%%%%%%%%%%%%%%%
 
-        tic;
-        [tempFit,ind] = ga(dados, pop_size, max_gen, pop);
-        time_original = toc;
+        t1 = tic;
+        [tempFit,indOrig{i}] = ga(dados, pop_size, max_gen, pop);
+        time_original = toc(t1);
 
-        aveFitnessOrig = aveFitnessOrig + tempFit;
-        aveRuntimeOrig = aveRuntimeOrig + time_original;
+        aveFitnessOrig(i) = tempFit;
+        aveRuntimeOrig(i) = time_original;
         
-        u = findLabels(ind, dados, labels);
+        u = findLabels(indOrig{i}, dados, labels);
         tempRandi = calculo_rand(u,labels);
         
-        aveRIOrig = aveRIOrig + tempRandi;
+        aveRIOrig(i) = tempRandi;
         
-        [rInd, ~] = size(ind);
-        clustersOrig(i) = rInd; % N�mero de clusters do resultado
+        [rInd, ~] = size(indOrig{i});
+        clustersOrig(i) = rInd;    % N�mero de clusters do resultado
 
         %%%%%%%%%%%%%%%%
         % Dados do GA modificado
         %%%%%%%%%%%%%%%%
-        tic;
-        [tempFit,ind] = ga_contrib(dados, pop_size, max_gen, pop);
-        time_contrib = toc;
+        t2 = tic;
+        [tempFit,indContrib{i}] = ga_contrib(dados, pop_size, max_gen, pop);
+        time_contrib = toc(t2);
         
-        aveFitnessCont = aveFitnessCont + tempFit;
-        aveRuntimeCont = aveRuntimeCont + time_contrib;
+        aveFitnessCont(i) = tempFit;
+        aveRuntimeCont(i) = time_contrib;
         
-        u = findLabels(ind, dados, labels);
+        u = findLabels(indContrib{i}, dados, labels);
         tempRandi = calculo_rand(u,labels);
         
-        aveRICont = aveRICont + tempRandi;
+        aveRICont(i) = tempRandi;
         
-        [rInd, ~] = size(ind);
+        [rInd, ~] = size(indContrib{i});
         clustersCont(i) = rInd;
-        
+               
     end
     
-    aveFitnessOrig = aveFitnessOrig/K;
-    aveFitnessCont = aveFitnessCont/K;
-    
-    aveRuntimeOrig = aveRuntimeOrig/K;
-    aveRuntimeCont = aveRuntimeCont/K;
-    
-    aveRIOrig = aveRIOrig/K;
-    aveRICont = aveRICont/K;
+    filenameMAT = strcat('mamn/results/', dataset, 'NEW.mat');
+    save(filenameMAT);
     
     %%%%%%%%%%%%%%%%
     % Montagem do arquivo texto com os dados para tabula��o
     %%%%%%%%%%%%%%%%
-    filename = strcat('mamn/results/', dataset, '.txt');
+    filename = strcat('mamn/results/', dataset, 'NEW.txt');
 
     fileID = fopen(filename,'w');
     fprintf(fileID,'Media do Fitness - Media do Tempo - Media do RI - #Clusters - Count Cluster\n');
@@ -106,8 +103,8 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
 
     [MOrig,FOrig] = mode(clustersOrig);
     [MCont,FCont] = mode(clustersCont);
-    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d',aveFitnessOrig,aveRuntimeOrig,aveRIOrig,MOrig,FOrig);
-    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d',aveFitnessCont,aveRuntimeCont,aveRICont,MCont,FCont);
+    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d\n',mean(aveFitnessOrig),mean(aveRuntimeOrig),mean(aveRIOrig),MOrig,FOrig);
+    fprintf(fileID,'%.2f;%.2f;%.2f;%d;%d',mean(aveFitnessCont),mean(aveRuntimeCont),mean(aveRICont),MCont,FCont);
     fclose(fileID);    
 
 end

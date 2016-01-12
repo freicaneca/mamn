@@ -15,7 +15,6 @@ function out_list = merge(ind, data, fitness_w)
 
     tic;
     no_cent = size(ind, 1);
-    dim_cent = size(ind, 2);
 
     % If only two centroid, cannot merge
     if no_cent ~= 2

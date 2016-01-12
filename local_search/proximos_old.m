@@ -10,8 +10,9 @@ O primeiro centroide tem o segundo como mais proximo; o segundo tem o quarto
 como mais proximo; o terceiro tem o primeiro; o quarto tem o terceiro.
 %}
 
-function indices = proximos(ind)
+function indices = proximos_old(ind)
 
+    dim_cent = size(ind,2);
     qtde_cent = size(ind,1);
     indices = zeros(1, qtde_cent);
 
@@ -19,21 +20,21 @@ function indices = proximos(ind)
     for i = 1:qtde_cent
         % Centroide atual
         atual_cent = ind(i,:);
-        outros = ind;
-        outros(i,:) = [];
-        
-        [r,~] = size(outros);
-        
-        result = pdist([atual_cent;outros]);
-        result = result(1:r);
-        
-        [~,index] = sort(result);
-        
-        x = outros(index(1),:);
-        
-        I = ismember(ind,x,'rows');
-        newIndex = find(I == 1);
-        
-        indices(i) = newIndex(1); % Primeiro índice do elemento mais próximo!
+        % Valor inicial da menor distancia tem que ser alto
+        menor_dist = 2*dim_cent*max(atual_cent);
+
+        % Iterando nos outros centroides
+        for j = 1:qtde_cent
+            % Evitando que calcule a distancia para o proprio atual_cent
+            if j ~= i
+                % Centroide candidato
+                cand_cent = ind(j,:);
+                dist = sum(abs(atual_cent - cand_cent)); 
+                if dist < menor_dist 
+                   menor_dist = dist;
+                   indices(i) = j;
+                end
+            end
+        end
     end
 end
