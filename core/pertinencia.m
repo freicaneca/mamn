@@ -12,7 +12,7 @@ function out_pert = pertinencia(ind, dados)
     out_pert = zeros(1, qtde_dados);
     for i = 1:qtde_dados
         % Inicializando menor_dist como valor alto
-        menor_dist = 999999;
+        menor_dist = 999999999;
         for j = 1:qtde_cent
             % Calculando distancia entre o dado i e o centroide j
             dist = abs(dados(i) - ind(j));

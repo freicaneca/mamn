@@ -17,6 +17,10 @@ function new_ind = kmeans(ind, dados)
 
     lista_pert = {};
 
+%    for i = 1:no_cent
+%        lista_pert{i} = dados(pertinencia_ == i,:);
+%    end
+
     % Inicializando valores em lista_pert para permitir append
     for i = 1:no_cent
         lista_pert{i} = inf*ones(1,dim_cent);

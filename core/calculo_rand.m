@@ -56,3 +56,23 @@ function randIndex = calculo_rand(u,v)
 
     randIndex = (a-b1*b2/c)/(0.5*(b1+b2)-b1*b2/c);
 end
+
+% Function to generate confusion matrix. Considers that
+% label(i) refers to data(i).
+%{
+function confusion_matrix = gera_confusion(true_label, our_label)
+
+   no_clst_true = max(true_label); 
+   no_clst_our = max(our_label);
+   confusion_matrix = zeros(no_clst_our, no_clst_true);
+
+   for i=1:no_clst_our
+        
+        for j=1:no_clst_true
+            confusion_matrix(i,j) += 1;
+        end
+
+   end
+%}
+
+

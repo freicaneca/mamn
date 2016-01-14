@@ -44,7 +44,7 @@ else
    if (PD > PDmax)
         PDmax = PD;
    end 
-   w = wmax - (PD/PDmax)*(wmax - wmin); 
+   w = round(wmax - (PD/PDmax)*(wmax - wmin)); 
 end
 
 end

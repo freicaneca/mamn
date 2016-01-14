@@ -34,7 +34,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.01;
+    p = 0.99;
 
     % Gradient mutation initial step size
     passo = 0.5;
@@ -139,7 +139,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end    
     [~,i] = max(popFitness);
-    bestInd = pop{i};                % Best Individuo
+    bestInd = pop{i}                % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
     
 end

@@ -17,6 +17,8 @@ elemento 2: tempo
 
 function out_list = split(ind, data, fitness_w)
 
+    %disp('ind chegando em split');
+    %ind
     tic;
 
     [no_cent, dim_cent] = size(ind);
@@ -38,6 +40,8 @@ function out_list = split(ind, data, fitness_w)
 
     out_list{1} = out_ind;
     out_list{2} = toc;
+    %disp('ind saido de split');
+    %out_list{1}
 end
 
 
@@ -66,6 +70,10 @@ function [new_ind, new_fitness] = subsplit(ind, cent_index, data, fitness_w, per
     new_cent_add = new_ind(cent_index,:);
     new_ind(cent_index, max_index) = new_ind(cent_index, max_index) - 2*max_std;
     new_cent_subtract = new_ind(cent_index,:);
+
+    %std_ = std(data_pert);
+    %new_cent_add = new_ind(cent_index,:)+std_;
+    %new_cent_subtract = new_ind(cent_index,:)-std_;
 
     new_ind(cent_index,:) = [];
     new_ind = [new_ind; new_cent_subtract; new_cent_add];

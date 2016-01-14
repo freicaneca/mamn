@@ -16,6 +16,8 @@ function out_list = merge(ind, data, fitness_w)
     tic;
     no_cent = size(ind, 1);
 
+    %disp('ind chegando a merge');
+    %ind
     % If only two centroid, cannot merge
     if no_cent ~= 2
 
@@ -51,6 +53,8 @@ function out_list = merge(ind, data, fitness_w)
         out_list{2} = toc;
 
     end
+    %disp('ind saindo de merge');
+    %out_list{1}
 end
 
 % Subfunction: merges two centroids.

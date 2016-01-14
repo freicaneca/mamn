@@ -40,7 +40,7 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
     sigma = 1;
     
     % Number of iterations before RTS adaptation begins
-    g = 20;
+    g = stop/4;
 
     % Name of the local search weights file
     local_search_filename = 'local_search.weights';
@@ -136,6 +136,7 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
     [~,i] = max(popFitness);
     bestInd = pop{i};                % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
+    bestInd 
 
 end
 
