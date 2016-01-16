@@ -16,7 +16,7 @@ function [pop] = geraPopulacao(dados, pInicial)
 
     [r,c] = size(dados);
     
-    pop = cell(pInicial,1);  % População inicial
+    pop = cell(1, pInicial);  % População inicial
     
     kMax = round(sqrt(r));
     
