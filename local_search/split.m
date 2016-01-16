@@ -21,6 +21,7 @@ function out_list = split(ind, data, fitness_w)
     %ind
     tic;
 
+    ind = unique(ind, 'rows');
     [no_cent, dim_cent] = size(ind);
     pertinency_ = pertinencia(ind, data);
 
