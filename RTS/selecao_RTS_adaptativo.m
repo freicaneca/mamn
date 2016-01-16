@@ -33,10 +33,16 @@ Data de criação: 08/12/2015
 Data de atualização: 08/12/2015 
 %}
 
+%disp('pop antes');
+%size(P)
+%P{1:end}
 [PD, Aptidao] = ajusteAdaptativo (P, mi, dados, pesos);
 
 [w, count, PDmax] = estrategiaAdaptacao (geracao, count, PD, PDmax, wmin, wmax, g);
 
 %[popNova] = RTS (popVelha, Aptidao, mi, filhos, w, dados, pesos);
 [popNova] = RTS (P, aptidao, mi, filhos, w, dados, pesos);
+%disp('pop depois');
+%size(popNova)
+%popNova{1:end}
 end

@@ -24,6 +24,10 @@ Data de atualização: 07/12/2015
 %}
 
 popNova = popVelha;
+%disp('pop antes');
+%popNova{1:end}
+%disp('aptid');
+%Aptidao
 
 %Para cada filho aplicar a seleção (lambda = mi)
 for i = 1:mi
@@ -50,4 +54,6 @@ for i = 1:mi
         popNova{IndProx} = filhos{i};
     end        
 end
+%disp('pop depois');
+%popNova{1:end}
 end

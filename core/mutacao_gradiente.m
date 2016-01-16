@@ -16,7 +16,7 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
     dim_cent = size(ind, 2);
 
     % Valor de correcao do passo. Mesmo valor utilizado na tese de Cicero
-    csi = 1.1;
+    csi = 1.001;
 
     % Pegando indice dos vizinhos proximos  
     indices_proximos = pega_vizinhos_proximos(ind, n, populacao);

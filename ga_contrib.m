@@ -77,6 +77,9 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
        % Generating parents indices
        parent_ind = ParesComRepo(solutions);
        
+       for i=1:solutions
+           popFitness(i) = fitness(pop{i}, dados, pesos);
+       end
        % Temporary population to handle gradient mutation
        pop_temp = pop;
 
@@ -104,7 +107,6 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
        pop = pop_temp;
 
        % Adaptive local search in the whole population
-
        for i = 1:length(pop)
             
            pop{i} = controlador_busca_local(pop{i}, bestFitness,...
@@ -113,12 +115,11 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
        end
 
        % Picking offspring from the population
-       offspring = {pop{solutions:end}};
+       offspring = {pop{solutions+1:end}};
 
-       % Calculating fitness of offspring
-
-       for i=1:solutions
-           popFitness(solutions+i) = fitness(pop{solutions+i}, dados, pesos);
+       % Calculating fitness of population
+       for i=1:2*solutions
+           popFitness(i) = fitness(pop{i}, dados, pesos);
        end
        
        % Verifica se o Fitness melhorou
@@ -132,10 +133,17 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
        
        % Probabilistic crowding. Picking old population (before generating offspring)
        old_pop = {pop{1:solutions}};
-
+       disp('pop antiga')
+       %size(pop)
+        old_pop{1:end}
+        offspring{1:end}
+        disp('aptidao antiga')
+        popFitness
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
-
+       disp('pop nova')
+       %size(pop)
+        pop{1:end}
        counter = counter + 1;
         
     end
@@ -146,11 +154,19 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
     popFitness = zeros(solutions,1);
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
+        rand_index(pop{i}, 'wine') 
     end    
     [~,i] = max(popFitness);
+
     bestInd = pop{i};              % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
     
+
+    bestInd = pop{i}                % Best Individuo
+    disp('fitness do best ind')
+    bestSolution = popFitness(i)    % Best Fitness Result
+    disp('rand do best ind')
+    rand_index(bestInd, 'wine') 
 end
 
 %%%%%%%%%%

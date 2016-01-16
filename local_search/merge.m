@@ -14,7 +14,10 @@ elemento 2: tempo
 function out_list = merge(ind, data, fitness_w)
 
     tic;
+    ind = unique(ind, 'rows');
     no_cent = size(ind, 1);
+
+    % Checking if there are repeated centroids
 
     %disp('ind chegando a merge');
     %ind

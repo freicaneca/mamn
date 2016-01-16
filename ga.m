@@ -86,6 +86,10 @@ function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLim
        % Generating parents indices
        parent_ind = ParesComRepo(solutions);
        
+       for i=1:solutions
+           popFitness(i) = fitness(pop{i}, dados, pesos);
+       end
+
        % Crossover + mutation
        for i = 1:size(parent_ind,1)
            
@@ -109,7 +113,7 @@ function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLim
        end
 
        % Picking offspring from the population
-       offspring = {pop{solutions:end}};
+       offspring = {pop{solutions+1:end}};
 
        % Calculating fitness of offspring
        for i=1:solutions
@@ -125,15 +129,21 @@ function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLim
            counterStall = counterStall + 1;
        end
        
+       % Calculating fitness of population
+       for i=1:2*solutions
+           popFitness(i) = fitness(pop{i}, dados, pesos);
+       end
+       
+       popFitness
        % Adaptive RTS
-
-       [pop, PDmax, count_PD] = selecao_RTS_adaptativo(pop, popFitness, solutions,...
+       %size(pop)
+       [pop, PDmax, count_PD] = selecao_RTS_adaptativo({pop{1:solutions}}, popFitness, solutions,...
            offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
-
        counter = counter + 1;
        
        fprintf('counter = %d\n',counter);
        fprintf('counterSatall = %d\n',counterStall);
+       %size(pop)
         
     end
     
@@ -145,9 +155,12 @@ function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLim
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end    
     [~,i] = max(popFitness);
-    bestInd = pop{i};                % Best Individuo
+    bestInd = pop{i}                % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
-    bestInd 
+    disp('fitness do best ind')
+    bestSolution = popFitness(i)    % Best Fitness Result
+    disp('rand do best ind')
+    rand_index(bestInd, 'wine') 
 
 end
 
