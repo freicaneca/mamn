@@ -124,17 +124,16 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
        
        % Probabilistic crowding. Picking old population (before generating offspring)
        old_pop = {pop{1:solutions}};
-       disp('pop antiga')
-       %size(pop)
-        old_pop{1:end}
-        offspring{1:end}
-        disp('aptidao antiga')
-        popFitness
+       %disp('pop antiga');
+       % old_pop{1:end};
+       % offspring{1:end};
+       % disp('aptidao antiga');
+       % popFitness;
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
-       disp('pop nova')
-       %size(pop)
-        pop{1:end}
+       %disp('pop nova')
+       size(pop)
+       % pop{1:end}
        counter = counter + 1;
         
     end
@@ -149,10 +148,10 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
     end    
     [~,i] = max(popFitness);
     bestInd = pop{i}                % Best Individuo
-    disp('fitness do best ind')
-    bestSolution = popFitness(i)    % Best Fitness Result
-    disp('rand do best ind')
-    rand_index(bestInd, 'wine') 
+    %disp('fitness do best ind')
+    %bestSolution = popFitness(i)    % Best Fitness Result
+    %disp('rand do best ind')
+    %rand_index(bestInd, 'wine') 
 end
 
 %%%%%%%%%%
