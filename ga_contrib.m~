@@ -8,13 +8,16 @@
 % - solutions: Quantidade de solucoes a serem geradas inicialmente
 % - generations: Máximo de geracoes possível
 % melhor fitness seja alterado
-% - stallGenLimit: Quantidade de geracoes a serem executadas sem que o
-% valor de fitness melhore
+% - stallGenLimit: Quantidade de geracoes a serem executadas sem que o valor de
 % - pop: initial population
 %
 % SA�DA:
 %
 % - bestSolution: Melhor solu��o de fitness
+%
+% EXEMPLO DE COMO CHAMAR ESSA FUN��O:
+%
+% >> ga_contrib('wine', 100, 20);
 %
 %%%%%%%%%%
 function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, stallGenLimit ,pop)
@@ -65,13 +68,12 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
     counter = 0;
     counterStall = 0;
     bestFitness = max(popFitness);
-    bestFitnessStall = bestFitness;
 
     % Initializing number of iterations with no PD improvement
     %count_PD = 0;
     %PDmax = 1;
 
-    while ((counter <= generations) && (counterStall <= stallGenLimit))
+    while ((counter <= generations) && (counter <= stallGenLimit))
     
        %%% TODO letra (a)
        % Generating parents indices
@@ -121,13 +123,10 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
            popFitness(solutions+i) = fitness(pop{solutions+i}, dados, pesos);
        end
        
-       % Verifica se o Fitness melhorou
        bestFitnessTemp = max(popFitness);
-       if (bestFitnessTemp > bestFitnessStall)
-            counterStall = 0;
-            bestFitnessStall = bestFitnessTemp;
-       else
-           counterStall = counterStall + 1;
+       
+       if (bestFitnessTemp >= bestFitness)
+        counterStall = counterStall + 1;
        end
        
        % Probabilistic crowding. Picking old population (before generating offspring)
@@ -148,7 +147,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
         popFitness(i) = fitness(pop{i}, dados, pesos);
     end    
     [~,i] = max(popFitness);
-    bestInd = pop{i};              % Best Individuo
+    bestInd = pop{i}                % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
     
 end
