@@ -17,7 +17,7 @@
 % - bestSolution: Melhor solu��o de fitness
 %
 %%%%%%%%%%
-function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, stallGenLimit ,pop)
+function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, stallGenLimit, pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -32,7 +32,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
     pesos = [1/3 1/3 1/3];
 
     % Mutation probability
-    p = 0.99;
+    p = 0.5;
 
     % Gradient mutation initial step size
     passo = 0.5;
@@ -133,16 +133,8 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
        
        % Probabilistic crowding. Picking old population (before generating offspring)
        old_pop = {pop{1:solutions}};
-       %disp('pop antiga');
-       % old_pop{1:end};
-       % offspring{1:end};
-       % disp('aptidao antiga');
-        %popFitness
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
-       %disp('pop nova')
-       %size(pop)
-       % pop{1:end}
        counter = counter + 1;
         
     end
@@ -153,7 +145,6 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
     popFitness = zeros(solutions,1);
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
-        %rand_index(pop{i}, 'wine') 
     end    
     [~,i] = max(popFitness);
 
