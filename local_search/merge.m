@@ -17,6 +17,7 @@ function out_list = merge(ind, data, fitness_w)
     ind = unique(ind, 'rows');
     if size(ind, 1) == 1
         ind = split(ind, data, fitness_w);
+        ind = ind{1};
     end
     no_cent = size(ind, 1);
 

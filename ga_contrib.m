@@ -156,7 +156,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, generations, sta
     %disp('fitness do best ind')
     %bestSolution = popFitness(i)    % Best Fitness Result
     %disp('rand do best ind')
-    %rand_index(bestInd, 'wine') 
+    rand_index(bestInd, 'wine');
 end
 
 %%%%%%%%%%
