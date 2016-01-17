@@ -134,7 +134,6 @@ function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLim
            popFitness(i) = fitness(pop{i}, dados, pesos);
        end
        
-       popFitness
        % Adaptive RTS
        %size(pop)
        [pop, PDmax, count_PD] = selecao_RTS_adaptativo({pop{1:solutions}}, popFitness, solutions,...
