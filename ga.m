@@ -121,7 +121,7 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
            popFitness(i) = fitness(pop{i}, dados, pesos);
        end
        
-       popFitness
+       popFitness;
        % Adaptive RTS
        %size(pop)
        [pop, PDmax, count_PD] = selecao_RTS_adaptativo({pop{1:solutions}}, popFitness, solutions,...
@@ -141,10 +141,10 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
     [~,i] = max(popFitness);
     bestInd = pop{i}                % Best Individuo
     bestSolution = popFitness(i);    % Best Fitness Result
-    disp('fitness do best ind')
-    bestSolution = popFitness(i)    % Best Fitness Result
-    disp('rand do best ind')
-    rand_index(bestInd, 'wine') 
+    %disp('fitness do best ind')
+    %bestSolution = popFitness(i)    % Best Fitness Result
+    %disp('rand do best ind')
+    %rand_index(bestInd, 'wine') 
 
 end
 

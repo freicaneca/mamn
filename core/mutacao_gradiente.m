@@ -12,11 +12,12 @@ Retorna: individuo mutado, passo atualizado.
 
 function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, dados, pesos_aptidao)
 
+    ind;
     no_cent = size(ind, 1);
     dim_cent = size(ind, 2);
 
     % Valor de correcao do passo. Mesmo valor utilizado na tese de Cicero
-    csi = 1.001;
+    csi = 1.000;
 
     % Pegando indice dos vizinhos proximos  
     indices_proximos = pega_vizinhos_proximos(ind, n, populacao);
@@ -44,13 +45,14 @@ function out_list = mutacao_gradiente(ind, n, passo, populacao, matriz_aptidao, 
         dif_ind = dif_ind(1:dim_cent*no_cent);
 
         % Calculando distancia
-        grad = grad + dif_aptidao*dif_ind;
+        grad = grad + dif_aptidao*dif_ind + 0.00000000001;
     end
     
     % Como so importa a direcao do gradiente, podemos transforma-lo num vetor
     % unitario dividindo por sua norma.
 
-    grad_norm = grad/(norm(grad)+0.000001);
+    grad_norm = grad/(norm(grad));
+    grad_norm = grad_norm/10;
 
     % Atualizando ind. Sera transformado em linha para ser adicionado ao grad
     % (que esta em linha) multiplicado pelo passo.

@@ -128,11 +128,11 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
        % old_pop{1:end};
        % offspring{1:end};
        % disp('aptidao antiga');
-       % popFitness;
+        %popFitness
        pop = crowding_probabilistico(old_pop, popFitness, solutions, parent_ind,...
        offspring, dados, pesos);
        %disp('pop nova')
-       size(pop)
+       %size(pop)
        % pop{1:end}
        counter = counter + 1;
         
@@ -144,7 +144,7 @@ function [bestSolution, bestInd] = ga_contrib(dados, solutions, stop, pop)
     popFitness = zeros(solutions,1);
     for i=1:solutions
         popFitness(i) = fitness(pop{i}, dados, pesos);
-        rand_index(pop{i}, 'wine') 
+        %rand_index(pop{i}, 'wine') 
     end    
     [~,i] = max(popFitness);
     bestInd = pop{i}                % Best Individuo

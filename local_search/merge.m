@@ -15,6 +15,9 @@ function out_list = merge(ind, data, fitness_w)
 
     tic;
     ind = unique(ind, 'rows');
+    if size(ind, 1) == 1
+        ind = split(ind, data, fitness_w);
+    end
     no_cent = size(ind, 1);
 
     % Checking if there are repeated centroids
@@ -22,7 +25,7 @@ function out_list = merge(ind, data, fitness_w)
     %disp('ind chegando a merge');
     %ind
     % If only two centroid, cannot merge
-    if no_cent ~= 2
+    if no_cent > 2
 
         % Finding nearest cluster to each of the clusters    
         nearest_indices = proximos(ind);

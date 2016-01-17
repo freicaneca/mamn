@@ -32,7 +32,9 @@ function indices_proximos = pega_vizinhos_proximos(ind, n, populacao)
         % retorna o vetor diferenca. Como queremos um escalar, pegamos a soma
         % do vetor.
 
-        dist_vector(i) = sum(abs(calcula_diferenca(ind, populacao{i})));
+        %if ~((size(ind, 1) == size(populacao{i}, 1)) & all(ind == populacao{i}))
+            dist_vector(i) = sum(abs(calcula_diferenca(ind, populacao{i})));
+        %end
         
     end
 
