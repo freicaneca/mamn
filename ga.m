@@ -8,18 +8,16 @@
 % - solutions: Quantidade de solu��es a serem geradas inicialmente
 % - stop: Quantidade de gera��es a serem executadas sem que o valor de
 % melhor fitness seja alterado
+% - stallGenLimit: Quantidade de geracoes a serem executadas sem que o
+% valor de fitness melhore
 % - pop: initial population
 %
 % SA�DA:
 %
 % - bestSolution: Melhor solu��o de fitness
 %
-% EXEMPLO DE COMO CHAMAR ESSA FUN��O:
-%
-% >> ga('wine', 100, 20);
-%
 %%%%%%%%%%
-function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
+function [bestSolution, bestInd] = ga(dados, solutions, generations, stallGenLimit ,pop)
 
     %page_screen_output(0);
     %page_output_immediately(1);
@@ -40,7 +38,7 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
     sigma = 1;
     
     % Number of iterations before RTS adaptation begins
-    g = stop/4;
+    g = stallGenLimit/4;
 
     % Name of the local search weights file
     local_search_filename = 'local_search.weights';
@@ -74,13 +72,15 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
     % Repeti��o at� que o crit�rio de parada seja atingido
     %%%%%%%%%
     counter = 0;
+    counterStall = 0;
     bestFitness = max(popFitness);
+    bestFitnessStall = bestFitness;
 
     % Initializing number of iterations with no PD improvement
     count_PD = 0;
     PDmax = 1;
 
-    while (counter <= stop)
+     while ((counter <= generations) && (counterStall <= stallGenLimit))
     
        %%% TODO letra (a)
        % Generating parents indices
@@ -115,8 +115,21 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
        % Picking offspring from the population
        offspring = {pop{solutions+1:end}};
 
+       % Calculating fitness of offspring
+       for i=1:solutions
+           popFitness(solutions+i) = fitness(pop{solutions+i}, dados, pesos);
+       end
+       
+       % Verifica se o Fitness melhorou
+       bestFitnessTemp = max(popFitness);
+       if (bestFitnessTemp > bestFitnessStall)
+            counterStall = 0;
+            bestFitnessStall = bestFitnessTemp;
+       else
+           counterStall = counterStall + 1;
+       end
+       
        % Calculating fitness of population
-
        for i=1:2*solutions
            popFitness(i) = fitness(pop{i}, dados, pesos);
        end
@@ -127,6 +140,9 @@ function [bestSolution, bestInd] = ga(dados, solutions, stop, pop)
        [pop, PDmax, count_PD] = selecao_RTS_adaptativo({pop{1:solutions}}, popFitness, solutions,...
            offspring, dados, pesos, counter, count_PD, PDmax, w_min, w_max, g);
        counter = counter + 1;
+       
+       fprintf('counter = %d\n',counter);
+       fprintf('counterSatall = %d\n',counterStall);
        %size(pop)
         
     end

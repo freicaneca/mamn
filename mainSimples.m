@@ -19,7 +19,7 @@ OUTPUTS (as prints):
     - Best fitness for each method.
 %}
 
-function [] = mainSimples(dataset, pop_size, max_gen, K)
+function [] = mainSimples(dataset, pop_size, max_gen, max_stallLimit, K)
 
     %%%%%%%%%
     % C�digo mais simples com o uso de K repeti��es
@@ -54,7 +54,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
         %%%%%%%%%%%%%%%%
 
         t1 = tic;
-        [tempFit,indOrig{i}] = ga(dados, pop_size, max_gen, pop);
+        [tempFit,indOrig{i}] = ga(dados, pop_size, max_gen, max_stallLimit, pop);
         time_original = toc(t1);
 
         aveFitnessOrig(i) = tempFit;
@@ -72,7 +72,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
         % Dados do GA modificado
         %%%%%%%%%%%%%%%%
         t2 = tic;
-        [tempFit,indContrib{i}] = ga_contrib(dados, pop_size, max_gen, pop);
+        [tempFit,indContrib{i}] = ga_contrib(dados, pop_size, max_gen, max_stallLimit, pop);
         time_contrib = toc(t2);
         
         aveFitnessCont(i) = tempFit;
@@ -94,7 +94,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, K)
     %%%%%%%%%%%%%%%%
     % Montagem do arquivo texto com os dados para tabula��o
     %%%%%%%%%%%%%%%%
-    filename = strcat('mamn/results/', dataset, 'NEW.txt');
+    filename = strcat('mamn/results/', dataset, 'NEW2.txt');
 
     fileID = fopen(filename,'w');
     fprintf(fileID,'Media do Fitness - Media do Tempo - Media do RI - #Clusters - Count Cluster\n');

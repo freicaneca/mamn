@@ -17,3 +17,5 @@ function ri = rand_index(ind, database)
     a = load(name);
     true_clst = a.labels;
     ri = calculo_rand(our_clst, true_clst);
+    
+end
