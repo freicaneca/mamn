@@ -22,7 +22,7 @@ OUTPUTS (as prints):
     - Best fitness for each method.
 %}
 
-function [] = main(dataset, pop_size, max_gen, alg)
+function [] = main(dataset, pop_size, max_gen, stall_lim, alg)
 
     %%%%%%%%%
     % Carrega dados da base de dados passada
@@ -43,13 +43,13 @@ function [] = main(dataset, pop_size, max_gen, alg)
         % Thiago Moura em: 21/12/2015
         
         tic;
-        ga(dados, pop_size, max_gen, pop);
+        ga(dados, pop_size, max_gen, stall_lim, pop);
         time_original = toc;
         
         fprintf('\n###\nMODIFIED\n###');
         
         tic;
-        ga_contrib(dados, pop_size, max_gen, pop);
+        ga_contrib(dados, pop_size, max_gen, stall_lim, pop);
         time_contrib = toc;
 
     elseif strcmp(alg, 'original')
@@ -57,7 +57,7 @@ function [] = main(dataset, pop_size, max_gen, alg)
         fprintf('\n###\nORIGINAL\n###');
         
         tic;
-        ga(dados, pop_size, max_gen, pop);
+        ga(dados, pop_size, max_gen, stall_lim, pop);
         time_original = toc;
     
     elseif strcmp(alg, 'modified')
@@ -65,7 +65,7 @@ function [] = main(dataset, pop_size, max_gen, alg)
         fprintf('\n###\nMODIFIED\n###');
         
         tic;
-        ga_contrib(dados, pop_size, max_gen, pop);
+        ga_contrib(dados, pop_size, max_gen, stall_lim, pop);
         time_contrib = toc;
 
     end

@@ -30,7 +30,7 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
     if ismember(no_cent, no_cent_arq) == 0
         
         % If no_cent = 2, cannot merge.
-        if no_cent ~= 2
+        if no_cent > 2
 
             % Pegando recompensa/new_ind da operacao de merge (0)
             r_new_ind_merge = recompensa(ind, melhor_aptidao, 0, dados,...
