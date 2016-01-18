@@ -88,7 +88,7 @@ function [] = mainSimples(dataset, pop_size, max_gen, max_stallLimit, K)
                
     end
     
-    filenameMAT = strcat('mamn/results/', dataset, 'NEW.mat');
+    filenameMAT = strcat('mamn/results/', dataset, 'NEW2.mat');
     save(filenameMAT);
     
     %%%%%%%%%%%%%%%%
